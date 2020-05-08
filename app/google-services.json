@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "107441513573",
+    "firebase_url": "https://akista-8647f.firebaseio.com",
+    "project_id": "akista-8647f",
+    "storage_bucket": "akista-8647f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:107441513573:android:177370306df5a611c8d28c",
+        "android_client_info": {
+          "package_name": "gps.gmv.akista"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "107441513573-d04mv36tq3nt8e60jjt8r8u6dvlar7dv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "gps.gmv.akista",
+            "certificate_hash": "7be70b7d5463d65a48cfa12194d929850b702691"
+          }
+        },
+        {
+          "client_id": "107441513573-v81of25llqjkpn8op4qgk67b55mgu3dh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDE8COsLPxWFzfyg28Q2QyaJCAuA79X-eY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "107441513573-v81of25llqjkpn8op4qgk67b55mgu3dh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

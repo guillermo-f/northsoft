@@ -1,0 +1,13 @@
+<resources>
+    <dimen name="fab_margin">16dp</dimen>
+
+    <dimen name="halfMargin">4dp</dimen>
+    <dimen name="margin">8dp</dimen>
+    <dimen name="doubleMargin">16dp</dimen>
+    <dimen name="tripleMargin">24dp</dimen>
+    <dimen name="quadMargin">32dp</dimen>
+
+    <dimen name="normalText">14sp</dimen>
+    <dimen name="littleText">12sp</dimen>
+    <dimen name="bigText">18sp</dimen>
+</resources>
