@@ -29,7 +29,6 @@
             android:windowSoftInputMode="stateHidden"
             android:screenOrientation="portrait" />
 
-
         <activity
             android:name=".actividades.ActivityLogin"
             android:theme="@style/AppTheme.NoActionBar"
