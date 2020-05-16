@@ -5,20 +5,20 @@
 :*
 :*                         SEMESTRE: ENE-JUN/2020  HORA: 10-11 HRS
 :*
-:*                Actividad que muestra el registro de asistencia de un tutorado
+:*                         Actividad de registro de calificaciones
 :*
-:* Archivo:      ActivityAsistencia.java
-:* Autor:        Guillermo Franco Alemán            16130804
-:*               Miguel Angel Carranza Esquivel     16130790
-:*               Victor Alberto Castillo Rivera     17130016
+:* Archivo:      ActivityRegistraCalificaciones.java
+:* Autor:        Guillermo Franco Alemán           16130804
+:*               Miguel Angel Carranza Esquivel    16130790
+:*               Victor Alberto Castillo Rivera    17130016
 :*
-:* Fecha:        08-05-2020
+:* Fecha:        14-05-2020
 :* Compilador:   JDK 8
 :* Ultima modif: -
 :*
 :* Fecha            Modificó                        Motivo
 :*==========================================================================================
-:* 08/05/2020       Franco, Esquivel, Castillo      Creación del archivo
+:* 14/05/2020       Franco, Carranza, Castillo      Creación del archivo
 :*==========================================================================================*/
 
 package gps.gmv.akista.actividades;
@@ -29,15 +29,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import gps.gmv.akista.R;
-import gps.gmv.akista.databinding.ActivityAsistenciaBinding;
+import gps.gmv.akista.databinding.ActivityRegistraCalificacionesBinding;
 
-public class ActivityAsistencia extends AppCompatActivity {
+public class ActivityRegistraCalificaciones extends AppCompatActivity {
 
-    private ActivityAsistenciaBinding binding;
+    private ActivityRegistraCalificacionesBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_asistencia);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_registra_calificaciones);
     }
 }

@@ -7,18 +7,18 @@
 :*
 :*                Actividad que muestra el registro de asistencia de un tutorado
 :*
-:* Archivo:      ActivityAsistencia.java
+:* Archivo:      ActivityRegistroTutor.java
 :* Autor:        Guillermo Franco Alemán            16130804
 :*               Miguel Angel Carranza Esquivel     16130790
 :*               Victor Alberto Castillo Rivera     17130016
 :*
-:* Fecha:        08-05-2020
+:* Fecha:        15-05-2020
 :* Compilador:   JDK 8
 :* Ultima modif: -
 :*
 :* Fecha            Modificó                        Motivo
 :*==========================================================================================
-:* 08/05/2020       Franco, Esquivel, Castillo      Creación del archivo
+:* 15/05/2020       Franco, Esquivel, Castillo      Creación del archivo
 :*==========================================================================================*/
 
 package gps.gmv.akista.actividades;
@@ -29,15 +29,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import gps.gmv.akista.R;
-import gps.gmv.akista.databinding.ActivityAsistenciaBinding;
+import gps.gmv.akista.databinding.ActivityRegistroTutorBinding;
 
-public class ActivityAsistencia extends AppCompatActivity {
+public class ActivityRegistroTutor extends AppCompatActivity {
 
-    private ActivityAsistenciaBinding binding;
+    private ActivityRegistroTutorBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_asistencia);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_registro_tutor);
     }
 }

@@ -12,6 +12,25 @@
         android:theme="@style/AppTheme">
 
         <activity
+            android:name=".actividades.ActivityAsistencia"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".actividades.ActivityCalendarioEventos"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".actividades.ActivityCalificaciones"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait" />
+
+
+        <activity
             android:name=".actividades.ActivityLogin"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden"
@@ -33,7 +52,25 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".actividades.ActivityAsistencia"
+            android:name=".actividades.ActivityPaseListaManual"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".actividades.ActivityRegistraCalificaciones"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".actividades.ActivityRegistroAviso"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".actividades.ActivityRegistroTutor"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden"
             android:screenOrientation="portrait" />

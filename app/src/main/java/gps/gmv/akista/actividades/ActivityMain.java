@@ -14,12 +14,11 @@
 :*
 :* Fecha:        08-05-2020
 :* Compilador:   JDK 8
-:* Descripción:  Pantalla principal de la app
 :* Ultima modif: -
 :*
 :* Fecha            Modificó                        Motivo
 :*==========================================================================================
-:* 08/05/2020       Franco, Esquivel, Castillo      Creación del archivo
+:* 08/05/2020       Franco, Carranza, Castillo      Creación del archivo
 :*==========================================================================================*/
 
 package gps.gmv.akista.actividades;
