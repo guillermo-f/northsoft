@@ -5,40 +5,45 @@
 :*
 :*                         SEMESTRE: ENE-JUN/2020  HORA: 10-11 HRS
 :*
-:*                            Actividad donde se registra un aviso
-:*                            a alguien en específico o en general
+:*                         Fragment de registro de calificaciones
 :*
-:* Archivo:      ActivityRegistroAviso.java
+:* Archivo:      FragmentRegistraCalificaciones.java
 :* Autor:        Guillermo Franco Alemán           16130804
 :*               Miguel Angel Carranza Esquivel    16130790
 :*               Victor Alberto Castillo Rivera    17130016
 :*
-:* Fecha:        08-05-2020
+:* Fecha:        14-05-2020
 :* Compilador:   JDK 8
 :* Ultima modif: -
 :*
 :* Fecha            Modificó                        Motivo
 :*==========================================================================================
-:* 08/05/2020       Franco, Esquivel, Castillo      Creación del archivo
+:* 14/05/2020       Franco, Carranza, Castillo      Creación del archivo
 :*==========================================================================================*/
 
-package gps.gmv.akista.actividades;
+package gps.gmv.akista.fragments;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
 
 import gps.gmv.akista.R;
-import gps.gmv.akista.databinding.ActivityRegistroAvisoBinding;
+import gps.gmv.akista.databinding.FragmentRegistraCalificacionesBinding;
 
-public class ActivityRegistroAviso extends AppCompatActivity {
+public class FragmentRegistraCalificaciones extends Fragment {
 
-    private ActivityRegistroAvisoBinding binding;
+    private FragmentRegistraCalificacionesBinding binding;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_registro_aviso);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_registra_calificaciones, container, false);
+        return binding.getRoot();
     }
 }

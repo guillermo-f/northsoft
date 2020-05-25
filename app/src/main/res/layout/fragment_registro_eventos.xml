@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="nombreEvento"
+            type="java.lang.String" />
+
+        <variable
+            name="motivo"
+            type="java.lang.String" />
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/appRed">
+
+        <RelativeLayout
+            android:id="@+id/top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/btRegresar"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/ic_left"
+                android:backgroundTint="@color/appRed"
+                android:tint="@color/appBlack"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="@dimen/doubleMargin" />
+
+            <ImageView
+                android:layout_centerHorizontal="true"
+                android:layout_width="144dp"
+                android:layout_height="144dp"
+                android:src="@drawable/akist_logo"
+                android:layout_margin="@dimen/quadMargin" />
+
+        </RelativeLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/top">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Nombre del evento"
+                    app:hintTextColor="@color/appBlack"
+                    android:layout_marginBottom="@dimen/halfMargin"
+                    android:layout_marginHorizontal="@dimen/quadMargin"
+                    android:background="#fff">
+
+                    <EditText
+                        android:id="@+id/etNom"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@={nombreEvento}"
+                        android:textSize="@dimen/normalText" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginVertical="@dimen/margin"
+                    android:layout_marginHorizontal="@dimen/quadMargin"
+                    android:weightSum="2">
+
+                    <Button
+                        android:id="@+id/btAbreCalendario"
+                        android:backgroundTint="@color/appWhite"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textAllCaps="false"
+                        android:layout_marginEnd="@dimen/doubleMargin"
+                        android:text="Seleccionar fecha" />
+
+                    <Button
+                        android:id="@+id/btAbreReloj"
+                        android:backgroundTint="@color/appWhite"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textAllCaps="false"
+                        android:layout_marginStart="@dimen/doubleMargin"
+                        android:text="Seleccionar hora" />
+
+                </LinearLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="108dp"
+                    android:hint="Motivo"
+                    app:hintTextColor="@color/appBlack"
+                    android:layout_marginVertical="@dimen/margin"
+                    android:layout_marginHorizontal="@dimen/quadMargin"
+                    android:background="#fff">
+
+                    <EditText
+                        android:id="@+id/etMsj"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="@={motivo}"
+                        android:textSize="@dimen/normalText"
+                        android:inputType="textMultiLine" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/appWhite"
+                    android:layout_marginVertical="@dimen/doubleMargin"
+                    android:layout_marginHorizontal="@dimen/quadMargin">
+
+                    <Spinner
+                        android:id="@+id/spinner"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content" />
+
+                </FrameLayout>
+
+                <Button
+                    android:id="@+id/btEnviar"
+                    android:backgroundTint="@color/appWhite"
+                    android:layout_marginTop="@dimen/margin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAllCaps="false"
+                    android:layout_gravity="center_horizontal"
+                    android:text="Enviar" />
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </RelativeLayout>
+
+</layout>

@@ -5,39 +5,45 @@
 :*
 :*                         SEMESTRE: ENE-JUN/2020  HORA: 10-11 HRS
 :*
-:*                Actividad que muestra el registro de asistencia de un tutorado
+:*                Fragment que muestra el registro de asistencia de un tutorado
 :*
-:* Archivo:      ActivityRegistroTutor.java
+:* Archivo:      FragmentAsistencia.java
 :* Autor:        Guillermo Franco Alemán            16130804
 :*               Miguel Angel Carranza Esquivel     16130790
 :*               Victor Alberto Castillo Rivera     17130016
 :*
-:* Fecha:        15-05-2020
+:* Fecha:        08-05-2020
 :* Compilador:   JDK 8
 :* Ultima modif: -
 :*
 :* Fecha            Modificó                        Motivo
 :*==========================================================================================
-:* 15/05/2020       Franco, Esquivel, Castillo      Creación del archivo
+:* 08/05/2020       Franco, Carranza, Castillo      Creación del archivo
 :*==========================================================================================*/
 
-package gps.gmv.akista.actividades;
+package gps.gmv.akista.fragments;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
 
 import gps.gmv.akista.R;
-import gps.gmv.akista.databinding.ActivityRegistroTutorBinding;
+import gps.gmv.akista.databinding.FragmentAsistenciaBinding;
 
-public class ActivityRegistroTutor extends AppCompatActivity {
+public class FragmentAsistencia extends Fragment {
 
-    private ActivityRegistroTutorBinding binding;
+    private FragmentAsistenciaBinding binding;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_registro_tutor);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_asistencia, container, false);
+        return binding.getRoot();
     }
 }

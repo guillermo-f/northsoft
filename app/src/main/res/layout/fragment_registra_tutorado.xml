@@ -10,23 +10,19 @@
             type="java.lang.String" />
 
         <variable
-            name="correo"
-            type="java.lang.String" />
-
-        <variable
-            name="contrasena"
-            type="java.lang.String" />
-
-        <variable
-            name="telefono"
-            type="java.lang.String" />
-
-        <variable
             name="direccion"
             type="java.lang.String" />
 
         <variable
             name="codigoPostal"
+            type="java.lang.String" />
+
+        <variable
+            name="CURP"
+            type="java.lang.String" />
+
+        <variable
+            name="claveEscolar"
             type="java.lang.String" />
 
     </data>
@@ -62,12 +58,12 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_below="@id/top">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -91,7 +87,7 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Correo electrónico"
+                    android:hint="Dirección"
                     app:hintTextColor="@color/appBlack"
                     android:layout_marginVertical="@dimen/halfMargin"
                     android:layout_marginHorizontal="@dimen/quadMargin"
@@ -99,64 +95,6 @@
 
                     <EditText
                         android:id="@+id/etCorreo"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@={correo}"
-                        android:textSize="@dimen/normalText"
-                        android:inputType="textEmailAddress" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Contraseña"
-                    app:hintTextColor="@color/appBlack"
-                    android:layout_marginVertical="@dimen/halfMargin"
-                    android:layout_marginHorizontal="@dimen/quadMargin"
-                    android:background="#fff">
-
-                    <EditText
-                        android:id="@+id/etContra"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@={contrasena}"
-                        android:textSize="@dimen/normalText"
-                        android:inputType="textPassword" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Telefono"
-                    app:hintTextColor="@color/appBlack"
-                    android:layout_marginVertical="@dimen/halfMargin"
-                    android:layout_marginHorizontal="@dimen/quadMargin"
-                    android:background="#fff">
-
-                    <EditText
-                        android:id="@+id/etTel"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@={telefono}"
-                        android:textSize="@dimen/normalText"
-                        android:maxLength="10"
-                        android:inputType="phone" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Direccion"
-                    app:hintTextColor="@color/appBlack"
-                    android:layout_marginVertical="@dimen/halfMargin"
-                    android:layout_marginHorizontal="@dimen/quadMargin"
-                    android:background="#fff">
-
-                    <EditText
-                        android:id="@+id/etDir"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@={direccion}"
@@ -174,11 +112,62 @@
                     android:background="#fff">
 
                     <EditText
-                        android:id="@+id/etCP"
+                        android:id="@+id/etContra"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@={codigoPostal}"
-                        android:maxLength="5"
+                        android:textSize="@dimen/normalText"
+                        android:inputType="number"
+                        android:maxLength="5" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="CURP"
+                    app:hintTextColor="@color/appBlack"
+                    android:layout_marginVertical="@dimen/halfMargin"
+                    android:layout_marginHorizontal="@dimen/quadMargin"
+                    android:background="#fff">
+
+                    <EditText
+                        android:id="@+id/etTel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@={CURP}"
+                        android:textSize="@dimen/normalText" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/appWhite"
+                    android:layout_marginVertical="@dimen/doubleMargin"
+                    android:layout_marginHorizontal="@dimen/quadMargin">
+
+                    <Spinner
+                        android:id="@+id/spinner"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content" />
+
+                </FrameLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Clave escolar"
+                    app:hintTextColor="@color/appBlack"
+                    android:layout_marginVertical="@dimen/halfMargin"
+                    android:layout_marginHorizontal="@dimen/quadMargin"
+                    android:background="#fff">
+
+                    <EditText
+                        android:id="@+id/etDir"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@={claveEscolar}"
                         android:textSize="@dimen/normalText" />
 
                 </com.google.android.material.textfield.TextInputLayout>

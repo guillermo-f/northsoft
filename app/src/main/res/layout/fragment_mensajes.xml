@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/appRed">
+
+        <RelativeLayout
+            android:id="@+id/top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/btRegresar"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/ic_left"
+                android:backgroundTint="@color/appRed"
+                android:tint="@color/appBlack"
+                android:layout_margin="@dimen/doubleMargin" />
+
+            <ImageView
+                android:layout_centerHorizontal="true"
+                android:layout_width="144dp"
+                android:layout_height="144dp"
+                android:src="@drawable/akist_logo"
+                android:layout_margin="@dimen/quadMargin" />
+
+            <ImageButton
+                android:id="@+id/btCrear"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/ic_add"
+                android:backgroundTint="@color/appRed"
+                android:tint="@color/appBlack"
+                android:layout_alignParentEnd="true"
+                android:layout_margin="@dimen/doubleMargin" />
+
+        </RelativeLayout>
+
+        <ListView
+            android:id="@+id/msgs"
+            android:dividerHeight="1dp"
+            android:layout_below="@id/top"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/appWhite"
+            android:layout_marginHorizontal="@dimen/doubleMargin"
+            android:layout_marginBottom="@dimen/doubleMargin" />
+
+    </RelativeLayout>
+
+</layout>

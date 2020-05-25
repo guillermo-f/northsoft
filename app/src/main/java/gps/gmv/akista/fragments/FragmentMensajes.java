@@ -5,39 +5,45 @@
 :*
 :*                         SEMESTRE: ENE-JUN/2020  HORA: 10-11 HRS
 :*
-:*                         Actividad de registro de calificaciones
+:*                Fragment donde se visualizan mensajes enviados por la app
 :*
-:* Archivo:      ActivityRegistraCalificaciones.java
+:* Archivo:      FragmentMensajes.java
 :* Autor:        Guillermo Franco Alemán           16130804
 :*               Miguel Angel Carranza Esquivel    16130790
 :*               Victor Alberto Castillo Rivera    17130016
 :*
-:* Fecha:        14-05-2020
+:* Fecha:        19-05-2020
 :* Compilador:   JDK 8
 :* Ultima modif: -
 :*
 :* Fecha            Modificó                        Motivo
 :*==========================================================================================
-:* 14/05/2020       Franco, Carranza, Castillo      Creación del archivo
+:* 19/05/2020       Franco, Carranza, Castillo      Creación del archivo
 :*==========================================================================================*/
 
-package gps.gmv.akista.actividades;
+package gps.gmv.akista.fragments;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
 
 import gps.gmv.akista.R;
-import gps.gmv.akista.databinding.ActivityRegistraCalificacionesBinding;
+import gps.gmv.akista.databinding.FragmentMensajesBinding;
 
-public class ActivityRegistraCalificaciones extends AppCompatActivity {
+public class FragmentMensajes extends Fragment {
 
-    private ActivityRegistraCalificacionesBinding binding;
+    private FragmentMensajesBinding binding;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_registra_calificaciones);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_mensajes, container, false);
+        return binding.getRoot();
     }
 }

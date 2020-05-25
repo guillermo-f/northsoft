@@ -5,39 +5,45 @@
 :*
 :*                         SEMESTRE: ENE-JUN/2020  HORA: 10-11 HRS
 :*
-:*                              Actividad de pase de lista manual
+:*                            Fragment para registrar a un alumno
 :*
-:* Archivo:      ActivityPaseListaManual.java
+:* Archivo:      FragmentRegistroAviso.java
 :* Autor:        Guillermo Franco Alemán           16130804
 :*               Miguel Angel Carranza Esquivel    16130790
 :*               Victor Alberto Castillo Rivera    17130016
 :*
-:* Fecha:        14-05-2020
+:* Fecha:        18-05-2020
 :* Compilador:   JDK 8
 :* Ultima modif: -
 :*
 :* Fecha            Modificó                        Motivo
 :*==========================================================================================
-:* 14/05/2020       Franco, Carranza, Castillo      Creación del archivo
+:* 18/05/2020       Franco, Carranza, Castillo      Creación del archivo
 :*==========================================================================================*/
 
-package gps.gmv.akista.actividades;
+package gps.gmv.akista.fragments;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
 
 import gps.gmv.akista.R;
-import gps.gmv.akista.databinding.ActivityPaseListaManualBinding;
+import gps.gmv.akista.databinding.FragmentRegistraTutoradoBinding;
 
-public class ActivityPaseListaManual extends AppCompatActivity {
+public class FragmentRegistraTutorado extends Fragment {
 
-    private ActivityPaseListaManualBinding binding;
+    private FragmentRegistraTutoradoBinding binding;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_pase_lista_manual);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_registra_tutorado, container, false);
+        return binding.getRoot();
     }
 }

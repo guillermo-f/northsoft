@@ -2,88 +2,9 @@
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <data />
-
-    <RelativeLayout
+    <FrameLayout
+        android:id="@+id/main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/appRed">
-
-        <ImageView
-            android:id="@+id/logo"
-            android:layout_width="160dp"
-            android:layout_height="160dp"
-            android:layout_centerHorizontal="true"
-            android:src="@drawable/akist_logo"
-            android:layout_margin="@dimen/quadMargin"/>
-
-        <FrameLayout
-            android:layout_below="@id/logo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/tripleMargin"
-            android:background="@color/appBlack">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="@color/appRed"
-                android:layout_margin="2dp">
-
-                <TextView
-                    android:layout_margin="@dimen/halfMargin"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/bigText"
-                    android:textStyle="bold"
-                    android:textColor="@color/appBlack"
-                    android:text="Nombre tutorado" />
-
-                <TextView
-                    android:layout_margin="@dimen/halfMargin"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/bigText"
-                    android:textStyle="bold"
-                    android:textColor="@color/appBlack"
-                    android:text="Matricula" />
-
-                <TextView
-                    android:layout_margin="@dimen/halfMargin"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/bigText"
-                    android:textStyle="bold"
-                    android:textColor="@color/appBlack"
-                    android:text="Nombre instituto" />
-
-            </LinearLayout>
-
-        </FrameLayout>
-
-        <ImageButton
-            android:id="@+id/btMenu"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:src="@drawable/ic_menu"
-            android:backgroundTint="@color/appRed"
-            android:tint="@color/appBlack"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_margin="@dimen/quadMargin" />
-
-        <ImageButton
-            android:id="@+id/btMsj"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:src="@drawable/ic_chat"
-            android:backgroundTint="@color/appRed"
-            android:tint="@color/appBlack"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentTop="true"
-            android:layout_margin="@dimen/quadMargin" />
-
-    </RelativeLayout>
+        android:layout_height="match_parent" />
 
 </layout>

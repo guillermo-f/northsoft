@@ -63,7 +63,7 @@
                 android:layout_marginHorizontal="@dimen/doubleMargin">
 
                 <Spinner
-                    android:id="@+id/spFecha"
+                    android:id="@+id/spAlumno"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content" />
 
@@ -71,27 +71,38 @@
 
         </LinearLayout>
 
-        <ListView
-            android:id="@+id/layoutAsist"
-            android:layout_below="@id/aluInfo"
-            android:layout_above="@id/btSend"
-            android:dividerHeight="1dp"
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/appWhite"
-            android:layout_marginVertical="@dimen/margin"
-            android:layout_marginHorizontal="@dimen/doubleMargin" />
+            android:layout_below="@id/aluInfo">
 
-        <Button
-            android:id="@+id/btSend"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:backgroundTint="@color/appWhite"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAllCaps="false"
-            android:text="Terminar"
-            android:layout_marginBottom="@dimen/margin" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <gps.gmv.akista.otros.NonScrollListView
+                    android:id="@+id/layoutAsist"
+                    android:dividerHeight="1dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/appWhite"
+                    android:layout_marginVertical="@dimen/margin"
+                    android:layout_marginHorizontal="@dimen/doubleMargin" />
+
+                <Button
+                    android:id="@+id/btSend"
+                    android:layout_gravity="center_horizontal"
+                    android:backgroundTint="@color/appWhite"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAllCaps="false"
+                    android:text="Terminar"
+                    android:layout_marginBottom="@dimen/margin" />
+
+            </LinearLayout>
+
+        </ScrollView>
 
     </RelativeLayout>
 

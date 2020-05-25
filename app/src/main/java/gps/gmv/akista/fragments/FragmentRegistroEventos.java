@@ -5,39 +5,45 @@
 :*
 :*                         SEMESTRE: ENE-JUN/2020  HORA: 10-11 HRS
 :*
-:*                Actividad que muestra el registro de calificaciones de un tutorado
+:*                Fragment para registro de eventos
 :*
-:* Archivo:      ActivityCalificaciones.java
+:* Archivo:      FragmentRegistroEventos.java
 :* Autor:        Guillermo Franco Alemán            16130804
 :*               Miguel Angel Carranza Esquivel     16130790
 :*               Victor Alberto Castillo Rivera     17130016
 :*
-:* Fecha:        13-05-2020
+:* Fecha:        18-05-2020
 :* Compilador:   JDK 8
 :* Ultima modif: -
 :*
 :* Fecha            Modificó                        Motivo
 :*==========================================================================================
-:* 13/05/2020       Franco, Carranza, Castillo      Creación del archivo
+:* 18/05/2020       Franco, Carranza, Castillo      Creación del archivo
 :*==========================================================================================*/
 
-package gps.gmv.akista.actividades;
+package gps.gmv.akista.fragments;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
 
 import gps.gmv.akista.R;
-import gps.gmv.akista.databinding.ActivityCalificacionesBinding;
+import gps.gmv.akista.databinding.FragmentRegistroEventosBinding;
 
-public class ActivityCalificaciones extends AppCompatActivity {
+public class FragmentRegistroEventos extends Fragment {
 
-    private ActivityCalificacionesBinding binding;
+    private FragmentRegistroEventosBinding binding;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_calificaciones);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_registro_eventos, container, false);
+        return binding.getRoot();
     }
 }

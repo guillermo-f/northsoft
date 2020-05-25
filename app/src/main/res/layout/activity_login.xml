@@ -1,95 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <data>
-
-        <variable
-            name="correoElectronico"
-            type="java.lang.String" />
-
-        <variable
-            name="contrasena"
-            type="java.lang.String" />
-
-    </data>
-
-    <RelativeLayout
+    <FrameLayout
+        android:id="@+id/main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/appRed"
-        android:gravity="center_vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center_horizontal">
-
-            <ImageView
-                android:layout_width="192dp"
-                android:layout_height="192dp"
-                android:src="@drawable/akist_logo"
-                android:layout_margin="@dimen/quadMargin"/>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Correo electrónico"
-                app:hintTextColor="@color/appBlack"
-                android:layout_marginBottom="@dimen/doubleMargin"
-                android:layout_marginHorizontal="@dimen/quadMargin"
-                android:background="#fff">
-
-                <EditText
-                    android:id="@+id/etCorreo"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@={correoElectronico}"
-                    android:textSize="@dimen/normalText" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Contraseña"
-                app:hintTextColor="@color/appBlack"
-                android:layout_marginVertical="@dimen/doubleMargin"
-                android:layout_marginHorizontal="@dimen/quadMargin"
-                android:background="#fff">
-
-                <EditText
-                    android:id="@+id/etContra"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@={contrasena}"
-                    android:textSize="@dimen/normalText"
-                    android:inputType="textPassword" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-            
-            <Button
-                android:id="@+id/btLogin"
-                android:backgroundTint="@color/appWhite"
-                android:layout_marginTop="@dimen/doubleMargin"
-                android:layout_marginBottom="@dimen/quadMargin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAllCaps="false"
-                android:text="Iniciar sesión" />
-
-            <TextView
-                android:id="@+id/tvReg"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/normalText"
-                android:textColor="@color/appBlack"
-                android:text="¿No tiene una cuenta? Regístrese aquí" />
-
-        </LinearLayout>
-
-    </RelativeLayout>
+        android:layout_height="match_parent" />
 
 </layout>
