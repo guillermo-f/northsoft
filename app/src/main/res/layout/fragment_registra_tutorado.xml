@@ -6,24 +6,8 @@
     <data>
 
         <variable
-            name="nombreCompleto"
-            type="java.lang.String" />
-
-        <variable
-            name="direccion"
-            type="java.lang.String" />
-
-        <variable
-            name="codigoPostal"
-            type="java.lang.String" />
-
-        <variable
-            name="CURP"
-            type="java.lang.String" />
-
-        <variable
-            name="claveEscolar"
-            type="java.lang.String" />
+            name="alumno"
+            type="gps.gmv.akista.entidades.Alumno" />
 
     </data>
 
@@ -57,8 +41,9 @@
         </RelativeLayout>
 
         <ScrollView
+            android:id="@+id/scroll"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_below="@id/top">
 
             <LinearLayout
@@ -79,7 +64,25 @@
                         android:id="@+id/etNom"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@={nombreCompleto}"
+                        android:text="@={alumno.nombre}"
+                        android:textSize="@dimen/normalText" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Matricula"
+                    app:hintTextColor="@color/appBlack"
+                    android:layout_marginVertical="@dimen/halfMargin"
+                    android:layout_marginHorizontal="@dimen/quadMargin"
+                    android:background="#fff">
+
+                    <EditText
+                        android:id="@+id/etMatr"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@={alumno.matricula}"
                         android:textSize="@dimen/normalText" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -94,10 +97,10 @@
                     android:background="#fff">
 
                     <EditText
-                        android:id="@+id/etCorreo"
+                        android:id="@+id/etDir"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@={direccion}"
+                        android:text="@={alumno.direccion}"
                         android:textSize="@dimen/normalText" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -112,10 +115,10 @@
                     android:background="#fff">
 
                     <EditText
-                        android:id="@+id/etContra"
+                        android:id="@+id/etCP"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@={codigoPostal}"
+                        android:text="@={alumno.codigoPostal}"
                         android:textSize="@dimen/normalText"
                         android:inputType="number"
                         android:maxLength="5" />
@@ -132,10 +135,11 @@
                     android:background="#fff">
 
                     <EditText
-                        android:id="@+id/etTel"
+                        android:id="@+id/etCURP"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@={CURP}"
+                        android:text="@={alumno.curp}"
+                        android:maxLength="18"
                         android:textSize="@dimen/normalText" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -164,10 +168,10 @@
                     android:background="#fff">
 
                     <EditText
-                        android:id="@+id/etDir"
+                        android:id="@+id/etClaveEsc"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@={claveEscolar}"
+                        android:text="@={alumno.clave}"
                         android:textSize="@dimen/normalText" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -185,6 +189,46 @@
             </LinearLayout>
 
         </ScrollView>
+
+        <ProgressBar
+            android:id="@+id/working"
+            android:visibility="gone"
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:layout_centerInParent="true" />
+
+        <LinearLayout
+            android:id="@+id/success"
+            android:layout_centerInParent="true"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="128dp"
+                android:layout_height="128dp"
+                android:src="@drawable/ic_check" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/doubleMargin"
+                android:text="Registro exitoso"
+                android:textSize="@dimen/mediumText"
+                android:textColor="@color/appBlack"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btVolver"
+                android:backgroundTint="@color/appWhite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:text="Regresar" />
+
+        </LinearLayout>
 
     </RelativeLayout>
 

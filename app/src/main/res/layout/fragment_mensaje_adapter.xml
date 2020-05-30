@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="remitente"
+            type="String" />
+
+        <variable
+            name="msj"
+            type="gps.gmv.akista.entidades.Mensaje" />
+
+        <variable
+            name="fecha"
+            type="String" />
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/appRed">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin">
+
+                <TextView
+                    android:id="@+id/rem"
+                    android:layout_marginHorizontal="@dimen/margin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@id/dat"
+                    android:text="@{remitente != null ? remitente : `Usted`}"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textColor="@color/appBlack"
+                    android:textSize="@dimen/bigText"
+                    android:textStyle="italic" />
+
+                <TextView
+                    android:id="@+id/dat"
+                    android:layout_marginHorizontal="@dimen/margin"
+                    android:layout_alignParentEnd="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{fecha}"
+                    android:textColor="@color/appBlack"
+                    android:textSize="@dimen/mediumText"
+                    android:textStyle="italic" />
+
+                <TextView
+                    android:id="@+id/msj"
+                    android:layout_below="@id/rem"
+                    android:layout_marginHorizontal="@dimen/margin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{msj.mensaje}"
+                    android:textColor="@color/appBlack"
+                    android:textSize="@dimen/bigText" />
+
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </RelativeLayout>
+
+</layout>

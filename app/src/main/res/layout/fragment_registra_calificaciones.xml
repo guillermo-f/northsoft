@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data />
+    <data>
+
+        <variable
+            name="calif"
+            type="String" />
+
+    </data>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -33,62 +40,101 @@
 
         </RelativeLayout>
 
-        <LinearLayout
-            android:id="@+id/aluInfo"
+        <RelativeLayout
+            android:id="@+id/body"
             android:layout_below="@id/top"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2">
-
-            <FrameLayout
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:background="@color/appWhite"
-                android:layout_marginHorizontal="@dimen/doubleMargin">
-
-                <Spinner
-                    android:id="@+id/spGpo"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content" />
-
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:background="@color/appWhite"
-                android:layout_marginHorizontal="@dimen/doubleMargin">
-
-                <Spinner
-                    android:id="@+id/spAlumno"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content" />
-
-            </FrameLayout>
-
-        </LinearLayout>
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/aluInfo">
+            android:layout_height="wrap_content">
 
             <LinearLayout
+                android:id="@+id/aluInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:background="@color/appWhite"
+                    android:layout_marginHorizontal="@dimen/doubleMargin">
+
+                    <Spinner
+                        android:id="@+id/spGpo"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content" />
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:background="@color/appWhite"
+                    android:layout_marginHorizontal="@dimen/doubleMargin">
+
+                    <Spinner
+                        android:id="@+id/spAlumno"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content" />
+
+                </FrameLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_below="@id/aluInfo"
+                android:layout_marginTop="@dimen/margin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <gps.gmv.akista.otros.NonScrollListView
-                    android:id="@+id/layoutAsist"
-                    android:dividerHeight="1dp"
+                <FrameLayout
                     android:layout_width="match_parent"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:background="@color/appWhite"
+                    android:layout_marginHorizontal="@dimen/doubleMargin">
+
+                    <Spinner
+                        android:id="@+id/spMateria"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content" />
+
+                </FrameLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Calificacion"
+                    app:hintTextColor="@color/appBlack"
                     android:layout_marginVertical="@dimen/margin"
-                    android:layout_marginHorizontal="@dimen/doubleMargin" />
+                    android:layout_marginHorizontal="@dimen/doubleMargin"
+                    android:background="#fff">
+
+                    <EditText
+                        android:id="@+id/etNom"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@={calif}"
+                        android:inputType="numberSigned"
+                        android:textSize="@dimen/normalText" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <FrameLayout
+                    android:layout_width="96dp"
+                    android:layout_height="wrap_content"
+                    android:background="@color/appWhite"
+                    android:layout_marginHorizontal="@dimen/doubleMargin">
+
+                    <Spinner
+                        android:id="@+id/spUnidad"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content" />
+
+                </FrameLayout>
 
                 <Button
                     android:id="@+id/btSend"
@@ -97,12 +143,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAllCaps="false"
-                    android:text="Terminar"
-                    android:layout_marginBottom="@dimen/margin" />
+                    android:text="Terminar" />
 
             </LinearLayout>
 
-        </ScrollView>
+        </RelativeLayout>
+
+        <ProgressBar
+            android:id="@+id/working"
+            android:visibility="gone"
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:layout_centerInParent="true" />
 
     </RelativeLayout>
 

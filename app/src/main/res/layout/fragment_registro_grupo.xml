@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="grupo"
+            type="gps.gmv.akista.entidades.Grupo" />
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/appRed">
+
+        <RelativeLayout
+            android:id="@+id/top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/btRegresar"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/ic_left"
+                android:backgroundTint="@color/appRed"
+                android:tint="@color/appBlack"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="@dimen/doubleMargin" />
+
+            <ImageView
+                android:layout_centerHorizontal="true"
+                android:layout_width="144dp"
+                android:layout_height="144dp"
+                android:src="@drawable/akist_logo"
+                android:layout_margin="@dimen/quadMargin" />
+
+        </RelativeLayout>
+
+        <ScrollView
+            android:id="@+id/scroll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/top">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Identificador del grupo"
+                    app:hintTextColor="@color/appBlack"
+                    android:layout_marginBottom="@dimen/margin"
+                    android:layout_marginHorizontal="@dimen/quadMargin"
+                    android:background="#fff">
+
+                    <EditText
+                        android:id="@+id/etGpo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@={grupo.id}"
+                        android:maxLength="18"
+                        android:textSize="@dimen/normalText" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/appWhite"
+                    android:layout_marginHorizontal="@dimen/quadMargin">
+
+                    <Spinner
+                        android:id="@+id/spDocente"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content" />
+
+                </FrameLayout>
+
+                <Button
+                    android:id="@+id/btSend"
+                    android:layout_gravity="center_horizontal"
+                    android:backgroundTint="@color/appWhite"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAllCaps="false"
+                    android:text="Terminar"
+                    android:layout_marginBottom="@dimen/margin" />
+
+            </LinearLayout>
+
+        </ScrollView>
+
+        <ProgressBar
+            android:id="@+id/working"
+            android:visibility="gone"
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:layout_centerInParent="true" />
+
+        <LinearLayout
+            android:id="@+id/success"
+            android:layout_centerInParent="true"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="128dp"
+                android:layout_height="128dp"
+                android:src="@drawable/ic_check" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/doubleMargin"
+                android:text="Registro exitoso"
+                android:textSize="@dimen/mediumText"
+                android:textColor="@color/appBlack"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btVolver"
+                android:backgroundTint="@color/appWhite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:text="Regresar" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</layout>

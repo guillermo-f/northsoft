@@ -24,7 +24,6 @@
 
 package gps.gmv.akista.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,6 +45,12 @@ public class FragmentDialogMenuTutor extends DialogFragment {
 
     private FragmentDialogMenuTutorBinding binding;
 
+    private FragmentMain parent;
+
+    public FragmentDialogMenuTutor(FragmentMain parent) {
+        this.parent = parent;
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -56,18 +61,17 @@ public class FragmentDialogMenuTutor extends DialogFragment {
     }
 
     private void setListeners() {
-        binding.btAsistencia.setOnClickListener(v -> startActivity(new Intent(getContext(), FragmentAsistencia.class)));
-        binding.btCalificaciones.setOnClickListener(v -> startActivity(new Intent(getContext(), FragmentCalificaciones.class)));
-        binding.btCalendario.setOnClickListener(v -> startActivity(new Intent(getContext(), FragmentCalendarioEventos.class)));
+        binding.btAsistencia.setOnClickListener(parent::verAsistencia);
+        binding.btCalificaciones.setOnClickListener(parent::verCalificaciones);
+        binding.btCalendario.setOnClickListener(parent::verCalendario);
+        binding.btRegistraHijo.setOnClickListener(parent::registraHijo);
 
         binding.btCerrarSesion.setOnClickListener(v ->
             new AlertDialog.Builder(getContext())
             .setTitle("Cerrar sesión")
             .setMessage("¿Está seguro de salir?")
             .setCancelable(false)
-            .setNegativeButton("No", (dialogInterface, i) ->
-                dialogInterface.dismiss()
-            )
+            .setNegativeButton("No", (dialogInterface, i) -> dialogInterface.dismiss())
             .setPositiveButton("Si", (dialogInterface, i) -> {
                 Singleton.getInstance().setUsuario(null);
                 FirebaseAuth.getInstance().signOut();

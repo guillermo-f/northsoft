@@ -15,11 +15,12 @@
 :*
 :* Fecha:        19-05-2020
 :* Compilador:   JDK 8
-:* Ultima modif: -
+:* Ultima modif: 26-05-2020
 :*
 :* Fecha            Modificó                        Motivo
 :*==========================================================================================
 :* 19/05/2020       Franco, Carranza, Castillo      Creación del archivo
+:* 26/05/2020       Franco, Carranza, Castillo      Funcionalidad de los botones
 :*==========================================================================================*/
 
 package gps.gmv.akista.fragments;
@@ -31,8 +32,11 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.DialogFragment;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 import gps.gmv.akista.R;
 import gps.gmv.akista.databinding.FragmentDialogMenuAdminBinding;
@@ -42,11 +46,51 @@ public class FragmentDialogMenuAdmin extends DialogFragment {
 
     private FragmentDialogMenuAdminBinding binding;
 
+    private FragmentMain parent;
+
+    FragmentDialogContrasena dialogContrasena;
+
+    public FragmentDialogMenuAdmin(FragmentMain parent) {
+        this.parent = parent;
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_dialog_menu_admin, container, false);
         binding.setUsuario(Singleton.getInstance().getUsuario());
+        setListeners();
         return binding.getRoot();
+    }
+
+    private void setListeners() {
+        binding.btAsistencia.setOnClickListener(parent::verAsistencia);
+        binding.btCalificaciones.setOnClickListener(parent::verCalificaciones);
+        binding.btEvento.setOnClickListener(parent::verCalendario);
+        binding.btAviso.setOnClickListener(parent::nuevoAviso);
+
+        binding.btRegistroAlumno.setOnClickListener(v -> {
+            dialogContrasena = new FragmentDialogContrasena(parent, 2);
+            dialogContrasena.show(getFragmentManager(), null);
+        });
+
+        binding.btRegistroGrupo.setOnClickListener(v -> {
+            dialogContrasena = new FragmentDialogContrasena(parent, 1);
+            dialogContrasena.show(getFragmentManager(), null);
+        });
+
+        binding.btCerrarSesion.setOnClickListener(v ->
+            new AlertDialog.Builder(getContext())
+            .setTitle("Cerrar sesión")
+            .setMessage("¿Está seguro de salir?")
+            .setCancelable(false)
+            .setNegativeButton("No", (dialogInterface, i) -> dialogInterface.dismiss())
+            .setPositiveButton("Si", (dialogInterface, i) -> {
+                Singleton.getInstance().setUsuario(null);
+                FirebaseAuth.getInstance().signOut();
+            })
+            .create()
+            .show()
+        );
     }
 }

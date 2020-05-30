@@ -6,12 +6,8 @@
     <data>
 
         <variable
-            name="motivo"
-            type="java.lang.String" />
-
-        <variable
-            name="mensaje"
-            type="java.lang.String" />
+            name="aviso"
+            type="gps.gmv.akista.entidades.Aviso" />
 
     </data>
 
@@ -45,6 +41,7 @@
         </RelativeLayout>
 
         <ScrollView
+            android:id="@+id/scroll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/top">
@@ -68,7 +65,7 @@
                         android:id="@+id/etMotivo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@={motivo}"
+                        android:text="@={aviso.motivo}"
                         android:textSize="@dimen/normalText" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -86,7 +83,7 @@
                         android:id="@+id/etMsj"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="@={mensaje}"
+                        android:text="@={aviso.mensaje}"
                         android:textSize="@dimen/normalText"
                         android:inputType="textMultiLine" />
 
@@ -118,6 +115,46 @@
             </LinearLayout>
 
         </ScrollView>
+
+        <ProgressBar
+            android:id="@+id/working"
+            android:visibility="gone"
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:layout_centerInParent="true" />
+
+        <LinearLayout
+            android:id="@+id/success"
+            android:layout_centerInParent="true"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="128dp"
+                android:layout_height="128dp"
+                android:src="@drawable/ic_check" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/doubleMargin"
+                android:text="Aviso enviado"
+                android:textSize="@dimen/mediumText"
+                android:textColor="@color/appBlack"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btVolver"
+                android:backgroundTint="@color/appWhite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:text="Regresar" />
+
+        </LinearLayout>
 
     </RelativeLayout>
 

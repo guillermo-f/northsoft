@@ -6,11 +6,11 @@
     <data>
 
         <variable
-            name="claveAlumno"
+            name="curpAlumno"
             type="java.lang.String" />
 
         <variable
-            name="contrasena"
+            name="claveAlumno"
             type="java.lang.String" />
 
     </data>
@@ -45,6 +45,7 @@
         </RelativeLayout>
 
         <ScrollView
+            android:id="@+id/scroll"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/top">
@@ -57,17 +58,18 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Clave de alumno"
+                    android:hint="CURP del alumno"
                     app:hintTextColor="@color/appBlack"
                     android:layout_marginBottom="@dimen/halfMargin"
                     android:layout_marginHorizontal="@dimen/quadMargin"
                     android:background="#fff">
 
                     <EditText
-                        android:id="@+id/etNom"
+                        android:id="@+id/etCURPAlumno"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@={claveAlumno}"
+                        android:text="@={curpAlumno}"
+                        android:maxLength="18"
                         android:textSize="@dimen/normalText" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -75,17 +77,17 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Contraseña escolar"
+                    android:hint="Clave escolar"
                     app:hintTextColor="@color/appBlack"
                     android:layout_marginVertical="@dimen/halfMargin"
                     android:layout_marginHorizontal="@dimen/quadMargin"
                     android:background="#fff">
 
                     <EditText
-                        android:id="@+id/etCorreo"
+                        android:id="@+id/etClave"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@={contrasena}"
+                        android:text="@={claveAlumno}"
                         android:textSize="@dimen/normalText"
                         android:inputType="textPassword" />
 
@@ -104,6 +106,46 @@
             </LinearLayout>
 
         </ScrollView>
+
+        <ProgressBar
+            android:id="@+id/working"
+            android:visibility="gone"
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:layout_centerInParent="true" />
+
+        <LinearLayout
+            android:id="@+id/success"
+            android:layout_centerInParent="true"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="128dp"
+                android:layout_height="128dp"
+                android:src="@drawable/ic_check" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/doubleMargin"
+                android:text="Registro exitoso"
+                android:textSize="@dimen/mediumText"
+                android:textColor="@color/appBlack"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btVolver"
+                android:backgroundTint="@color/appWhite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:text="Regresar" />
+
+        </LinearLayout>
 
     </RelativeLayout>
 

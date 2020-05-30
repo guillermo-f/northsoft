@@ -35,83 +35,113 @@
 
         </RelativeLayout>
 
-        <TextView
-            android:id="@+id/subtitle"
+        <RelativeLayout
+            android:id="@+id/body"
             android:layout_below="@id/top"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/doubleMargin"
-            android:text="Unidades"
-            android:textSize="@dimen/mediumText"
-            android:textStyle="bold" />
-
-        <LinearLayout
-            android:id="@+id/buttons"
-            android:layout_marginHorizontal="@dimen/doubleMargin"
-            android:layout_marginTop="@dimen/margin"
-            android:layout_below="@id/subtitle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="5">
-            
-            <Button
-                android:id="@+id/u1"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/halfMargin"
-                android:text="1"
-                android:background="@color/appWhite" />
+            android:layout_height="match_parent">
 
-            <Button
-                android:id="@+id/u2"
-                android:layout_width="0dp"
-                android:layout_weight="1"
+            <TextView
+                android:id="@+id/subtitle"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/halfMargin"
-                android:text="2"
-                android:background="@color/appWhite" />
+                android:layout_marginStart="@dimen/doubleMargin"
+                android:text="Unidades"
+                android:textSize="@dimen/mediumText"
+                android:textStyle="bold" />
 
-            <Button
-                android:id="@+id/u3"
-                android:layout_width="0dp"
-                android:layout_weight="1"
+            <LinearLayout
+                android:id="@+id/buttons"
+                android:layout_marginHorizontal="@dimen/doubleMargin"
+                android:layout_marginTop="@dimen/margin"
+                android:layout_below="@id/subtitle"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/halfMargin"
-                android:text="3"
-                android:background="@color/appWhite" />
+                android:orientation="horizontal"
+                android:weightSum="5">
 
-            <Button
-                android:id="@+id/u4"
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                <Button
+                    android:id="@+id/u1"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/halfMargin"
+                    android:text="1"
+                    android:background="@color/appWhite" />
+
+                <Button
+                    android:id="@+id/u2"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/halfMargin"
+                    android:text="2"
+                    android:background="@color/appWhite" />
+
+                <Button
+                    android:id="@+id/u3"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/halfMargin"
+                    android:text="3"
+                    android:background="@color/appWhite" />
+
+                <Button
+                    android:id="@+id/u4"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/halfMargin"
+                    android:text="4"
+                    android:background="@color/appWhite" />
+
+                <Button
+                    android:id="@+id/u5"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/halfMargin"
+                    android:text="5"
+                    android:background="@color/appWhite" />
+
+            </LinearLayout>
+
+            <FrameLayout
+                android:id="@+id/parentSpinner"
+                android:layout_below="@id/buttons"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/halfMargin"
-                android:text="4"
-                android:background="@color/appWhite" />
+                android:background="@color/appWhite"
+                android:layout_marginTop="@dimen/margin"
+                android:layout_marginHorizontal="@dimen/doubleMargin">
 
-            <Button
-                android:id="@+id/u5"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/halfMargin"
-                android:text="5"
-                android:background="@color/appWhite" />
-            
-        </LinearLayout>
+                <Spinner
+                    android:id="@+id/spinner"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content" />
 
-        <ListView
-            android:id="@+id/layoutUnit"
-            android:dividerHeight="1dp"
-            android:layout_below="@id/buttons"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/appWhite"
-            android:layout_marginTop="@dimen/halfMargin"
-            android:layout_marginHorizontal="@dimen/doubleMargin"
-            android:layout_marginBottom="@dimen/doubleMargin" />
+            </FrameLayout>
+
+            <ListView
+                android:id="@+id/listView"
+                android:dividerHeight="1dp"
+                android:layout_below="@id/parentSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/appWhite"
+                android:layout_marginTop="@dimen/margin"
+                android:layout_marginHorizontal="@dimen/doubleMargin"
+                android:layout_marginBottom="@dimen/doubleMargin" />
+
+        </RelativeLayout>
+
+        <ProgressBar
+            android:id="@+id/working"
+            android:visibility="gone"
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:layout_centerInParent="true" />
 
     </RelativeLayout>
 

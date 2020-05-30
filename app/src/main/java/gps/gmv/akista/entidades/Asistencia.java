@@ -19,13 +19,60 @@
 :* Fecha            Modificó                        Motivo
 :*==========================================================================================
 :* 21/05/2020       Franco, Carranza, Castillo      Creación del archivo
+:* 25/05/2020       Franco, Carranza, Castillo      Añadido el campo 'grupo'
 :*==========================================================================================*/
 
 package gps.gmv.akista.entidades;
 
+import gps.gmv.akista.otros.Singleton;
+
 public class Asistencia {
 
-    private String  idAlumno;
-    private boolean asistio;
+    private String  idAlumno,
+                    grupo;
+    private int     asistencia;
     private long    fecha;
+
+    public static final int ASISTIO = 0,
+                            FALTA = 1,
+                            JUSTIF = 2;
+
+    public Asistencia() {
+        idAlumno = "";
+        grupo = "";
+        asistencia = ASISTIO;
+        fecha = System.currentTimeMillis();
+    }
+
+    public String getIdAlumno() {
+        return idAlumno;
+    }
+
+    public void setIdAlumno(String idAlumno) {
+        this.idAlumno = idAlumno;
+    }
+
+    public String getGrupo() {
+        return grupo;
+    }
+
+    public void setGrupo(String grupo) {
+        this.grupo = grupo;
+    }
+
+    public int getAsistencia() {
+        return asistencia;
+    }
+
+    public void setAsistencia(int asistencia) {
+        this.asistencia = asistencia;
+    }
+
+    public long getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(long fecha) {
+        this.fecha = fecha;
+    }
 }

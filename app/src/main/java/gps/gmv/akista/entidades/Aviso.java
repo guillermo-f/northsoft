@@ -23,6 +23,8 @@
 
 package gps.gmv.akista.entidades;
 
+import java.util.UUID;
+
 public class Aviso {
 
     private String id,
@@ -30,6 +32,14 @@ public class Aviso {
                    mensaje,
                    destinatario;
     private long   fechaMensaje;
+
+    public Aviso() {
+        id = UUID.randomUUID().toString();
+        motivo = "";
+        mensaje = "";
+        destinatario = "";
+        fechaMensaje = System.currentTimeMillis();
+    }
 
     public String getId() {
         return id;

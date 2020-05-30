@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data />
+    <data>
+
+        <variable
+            name="mes"
+            type="String" />
+
+    </data>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -35,13 +42,52 @@
 
         </RelativeLayout>
 
-        <CalendarView
-            android:id="@+id/calendar"
+        <RelativeLayout
+            android:id="@+id/dummy"
             android:layout_below="@id/top"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/appWhite"
-            android:layout_marginHorizontal="@dimen/doubleMargin" />
+            android:background="@color/appSecPink"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/appBlack"
+                android:textSize="@dimen/mediumText"
+                android:text="@{mes}"
+                android:layout_marginVertical="@dimen/doubleMargin"/>
+
+        </RelativeLayout>
+
+        <com.github.sundeepk.compactcalendarview.CompactCalendarView
+            android:id="@+id/calendar"
+            android:layout_below="@id/dummy"
+            android:layout_width="match_parent"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
+            android:layout_height="250dp"
+            app:compactCalendarTargetHeight="250dp"
+            app:compactCalendarTextSize="@dimen/normalText"
+            app:compactCalendarBackgroundColor="@color/appSecPink"
+            app:compactCalendarTextColor="@color/appWhite"
+            app:compactCalendarCurrentSelectedDayBackgroundColor="@color/appPink"
+            app:compactCalendarCurrentDayBackgroundColor="@color/appRed"
+            app:compactCalendarMultiEventIndicatorColor="@color/appWhite" />
+
+        <ListView
+            android:id="@+id/listView"
+            android:layout_below="@id/calendar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:dividerHeight="1dp" />
+
+        <ProgressBar
+            android:id="@+id/working"
+            android:visibility="gone"
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:layout_centerInParent="true" />
 
     </RelativeLayout>
 

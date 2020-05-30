@@ -55,6 +55,7 @@
         </RelativeLayout>
 
         <ScrollView
+            android:id="@+id/scroll"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/top">
@@ -209,6 +210,13 @@
             </LinearLayout>
 
         </ScrollView>
+
+        <ProgressBar
+            android:id="@+id/working"
+            android:visibility="gone"
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:layout_centerInParent="true" />
 
     </RelativeLayout>
 

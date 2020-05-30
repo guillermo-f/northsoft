@@ -23,13 +23,23 @@
 
 package gps.gmv.akista.entidades;
 
+import java.util.UUID;
+
+import gps.gmv.akista.otros.Singleton;
+
 public class Evento {
 
     private String  id,
                     nombre,
-                    motivo,
-                    destinatario;
+                    motivo;
     private long    fechaHora;
+
+    public Evento() {
+        id = UUID.randomUUID().toString();
+        nombre = "";
+        motivo = "";
+        fechaHora = 0L;
+    }
 
     public String getId() {
         return id;
@@ -53,14 +63,6 @@ public class Evento {
 
     public void setMotivo(String motivo) {
         this.motivo = motivo;
-    }
-
-    public String getDestinatario() {
-        return destinatario;
-    }
-
-    public void setDestinatario(String destinatario) {
-        this.destinatario = destinatario;
     }
 
     public long getFechaHora() {

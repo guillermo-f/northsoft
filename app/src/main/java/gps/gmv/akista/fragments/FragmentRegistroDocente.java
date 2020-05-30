@@ -53,14 +53,20 @@ public class FragmentRegistroDocente extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_registro_docente, container, false);
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
         init();
         setListeners();
-        return binding.getRoot();
     }
 
     private void init() {
         binding.setUsuario(new Usuario());
-        binding.getUsuario().setTipoUsuario(2);
+        binding.getUsuario().setTipoUsuario(Usuario.PROFE);
         binding.setContrasena("");
     }
 
@@ -74,25 +80,37 @@ public class FragmentRegistroDocente extends Fragment {
         HashMap<Integer, String> checks = check();
 
         if (checks.isEmpty()) {
-            FirebaseAuth.getInstance().createUserWithEmailAndPassword(binding.getUsuario().getCorreo(), binding.getContrasena())
-            .addOnCompleteListener(getActivity(), task -> {
-                if (task.isSuccessful()) {
+            changeVisibility(false);
+
+            FirebaseAuth.getInstance()
+            .createUserWithEmailAndPassword(binding.getUsuario().getCorreo(), binding.getContrasena())
+            .addOnCompleteListener(getActivity(), taskA -> {
+                if (taskA.isSuccessful()) {
+                    binding.getUsuario().setId(FirebaseAuth.getInstance().getUid());
+
                     FirebaseDatabase.getInstance().
                     getReference("usuario").
                     child(FirebaseAuth.getInstance().getUid()).
-                    setValue(binding.getUsuario());
+                    setValue(binding.getUsuario())
+                    .addOnCompleteListener(taskB -> {
+                        if (!taskB.isSuccessful()) {
+                            Snackbar.make(getView(), "Registro fallido", Snackbar.LENGTH_LONG).show();
+                            changeVisibility(true);
+                            FirebaseAuth.getInstance().getCurrentUser().delete();
+                        }
+                    });
                 }
                 else
-                    Snackbar.make(getView(), task.getException().getMessage(), Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(getView(), taskA.getException().getMessage(), Snackbar.LENGTH_LONG).show();
             });
         } else {
-            binding.etNom.setError(checks.containsKey(1) ? checks.get(1) : null);
-            binding.etCorreo.setError(checks.containsKey(2) ? checks.get(2) : null);
-            binding.etContra.setError(checks.containsKey(3) ? checks.get(3) : null);
-            binding.etTel.setError(checks.containsKey(4) ? checks.get(4) : null);
-            binding.etDir.setError(checks.containsKey(5) ? checks.get(5) : null);
-            binding.etCP.setError(checks.containsKey(6) ? checks.get(6) : null);
-            binding.etClaveDoc.setError(checks.containsKey(7) ? checks.get(7) : null);
+            binding.etNom.setError(checks.get(1));
+            binding.etCorreo.setError(checks.get(2));
+            binding.etContra.setError(checks.get(3));
+            binding.etTel.setError(checks.get(4));
+            binding.etDir.setError(checks.get(5));
+            binding.etCP.setError(checks.get(6));
+            binding.etClaveDoc.setError(checks.get(7));
         }
     }
 
@@ -156,5 +174,11 @@ public class FragmentRegistroDocente extends Fragment {
 
     private void back() {
         getActivity().getSupportFragmentManager().popBackStack();
+    }
+
+    private void changeVisibility(boolean visible) {
+        binding.top.setVisibility(visible ? View.VISIBLE : View.GONE);
+        binding.scroll.setVisibility(visible ? View.VISIBLE : View.GONE);
+        binding.working.setVisibility(visible ? View.GONE : View.VISIBLE);
     }
 }

@@ -2,8 +2,6 @@
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <data />
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -33,16 +31,16 @@
 
         </RelativeLayout>
 
-        <RelativeLayout
-            android:layout_below="@id/top"
+        <ScrollView
+            android:id="@+id/scroll"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_below="@id/top">
 
             <LinearLayout
-                android:id="@+id/spinners"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
                 <FrameLayout
                     android:layout_width="match_parent"
@@ -57,42 +55,53 @@
 
                 </FrameLayout>
 
-            </LinearLayout>
-
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/spinners">
-
-                <LinearLayout
+                <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:background="@color/appWhite"
+                    android:layout_marginVertical="@dimen/margin"
+                    android:layout_marginHorizontal="@dimen/doubleMargin">
 
-                    <gps.gmv.akista.otros.NonScrollListView
-                        android:id="@+id/layoutAsist"
-                        android:dividerHeight="1dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/appWhite"
-                        android:layout_marginVertical="@dimen/margin"
-                        android:layout_marginHorizontal="@dimen/doubleMargin" />
+                    <Spinner
+                        android:id="@+id/spAlumno"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content" />
 
-                    <Button
-                        android:id="@+id/btSend"
-                        android:layout_gravity="center_horizontal"
-                        android:backgroundTint="@color/appWhite"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAllCaps="false"
-                        android:text="Terminar"
-                        android:layout_marginBottom="@dimen/margin" />
+                </FrameLayout>
 
-                </LinearLayout>
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/appWhite"
+                    android:layout_marginHorizontal="@dimen/doubleMargin">
 
-            </ScrollView>
+                    <Spinner
+                        android:id="@+id/spAsistencia"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content" />
 
-        </RelativeLayout>
+                </FrameLayout>
+
+                <Button
+                    android:id="@+id/btSend"
+                    android:layout_gravity="center_horizontal"
+                    android:backgroundTint="@color/appWhite"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAllCaps="false"
+                    android:text="Terminar"
+                    android:layout_marginBottom="@dimen/margin" />
+
+            </LinearLayout>
+
+        </ScrollView>
+
+        <ProgressBar
+            android:id="@+id/working"
+            android:visibility="gone"
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:layout_centerInParent="true" />
 
     </RelativeLayout>
 

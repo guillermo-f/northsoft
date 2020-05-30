@@ -25,6 +25,7 @@ package gps.gmv.akista.actividades;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -59,17 +60,22 @@ public class ActivityLogin extends AppCompatActivity implements FirebaseAuth.Aut
         .commit();
     }
 
-
     @Override
     public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-        if (firebaseAuth.getCurrentUser() != null && !firebaseAuth.getCurrentUser().isAnonymous()) {
+        if (firebaseAuth.getCurrentUser() != null) {
+            binding.main.setVisibility(View.GONE);
+            binding.working.setVisibility(View.VISIBLE);
+
             FirebaseDatabase.getInstance().
             getReference("usuario").
             child(FirebaseAuth.getInstance().getUid())
-            .addValueEventListener(new ValueEventListener() {
+            .addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     Singleton.getInstance().setUsuario(dataSnapshot.getValue(Usuario.class));
+
+                    startActivity(new Intent(ActivityLogin.this, ActivityMain.class));
+                    finish();
                 }
 
                 @Override
@@ -77,9 +83,6 @@ public class ActivityLogin extends AppCompatActivity implements FirebaseAuth.Aut
                     Snackbar.make(binding.main, error.getMessage(), Snackbar.LENGTH_LONG).show();
                 }
             });
-
-            startActivity(new Intent(this, ActivityMain.class));
-            finish();
         }
     }
 }

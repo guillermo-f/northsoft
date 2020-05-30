@@ -34,6 +34,19 @@ public class Usuario {
                     claveDocente;
     private int     tipoUsuario;
 
+    public static final int TUTOR = 1,
+                            PROFE = 2;
+
+    public Usuario() {
+        id = "";
+        nombre = "";
+        correo = "";
+        telefono = "";
+        direccion = "";
+        codigoPostal = "";
+        tipoUsuario = 0;
+    }
+
     public String getId() {
         return id;
     }
@@ -96,5 +109,10 @@ public class Usuario {
 
     public void setClaveDocente(String claveDocente) {
         this.claveDocente = claveDocente;
+    }
+
+    @Override
+    public String toString() {
+        return nombre;
     }
 }

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="alumno"
+            type="gps.gmv.akista.entidades.Alumno" />
+
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/appBlack">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/appRed"
+            android:layout_margin="2dp">
+
+            <TextView
+                android:layout_marginHorizontal="@dimen/halfMargin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/mediumText"
+                android:textStyle="bold"
+                android:textColor="@color/appBlack"
+                android:text="@{alumno.nombre}" />
+
+            <TextView
+                android:layout_marginHorizontal="@dimen/halfMargin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/mediumText"
+                android:textStyle="bold"
+                android:textColor="@color/appBlack"
+                android:text="@{`Matricula: ` + alumno.matricula}" />
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+</layout>

@@ -23,22 +23,26 @@
 
 package gps.gmv.akista.entidades;
 
+import androidx.annotation.NonNull;
+
 public class Alumno {
 
-    private String  id,
-                    nombre,
+    private String  nombre,
+                    matricula,
                     direccion,
                     codigoPostal,
-                    CURP,
-                    clave;
-    private int     grado;
+                    curp,
+                    clave,
+                    grupo;
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
+    public Alumno() {
+        nombre = "";
+        matricula = "";
+        direccion = "";
+        codigoPostal = "";
+        curp = "";
+        clave = "";
+        grupo = "";
     }
 
     public String getNombre() {
@@ -47,6 +51,14 @@ public class Alumno {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getMatricula() {
+        return matricula;
+    }
+
+    public void setMatricula(String matricula) {
+        this.matricula = matricula;
     }
 
     public String getDireccion() {
@@ -65,12 +77,12 @@ public class Alumno {
         this.codigoPostal = codigoPostal;
     }
 
-    public String getCURP() {
-        return CURP;
+    public String getCurp() {
+        return curp;
     }
 
-    public void setCURP(String CURP) {
-        this.CURP = CURP;
+    public void setCurp(String curp) {
+        this.curp = curp;
     }
 
     public String getClave() {
@@ -81,11 +93,17 @@ public class Alumno {
         this.clave = clave;
     }
 
-    public int getGrado() {
-        return grado;
+    public String getGrupo() {
+        return grupo;
     }
 
-    public void setGrado(int grado) {
-        this.grado = grado;
+    public void setGrupo(String grupo) {
+        this.grupo = grupo;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return matricula;
     }
 }

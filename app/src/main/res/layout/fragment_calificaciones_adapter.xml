@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        
+        <variable
+            name="calificacion"
+            type="gps.gmv.akista.entidades.Calificacion" />
+        
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_marginHorizontal="@dimen/doubleMargin"
+            android:layout_marginVertical="@dimen/halfMargin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="@dimen/bigText"
+            android:textColor="@color/appBlack"
+            android:text="@{calificacion.nombreMateria}" />
+
+        <TextView
+            android:layout_marginHorizontal="@dimen/doubleMargin"
+            android:layout_marginVertical="@dimen/halfMargin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/mediumText"
+            android:textColor="@color/appBlack"
+            android:text="@{`Calificacion: ` + calificacion.calif}" />
+
+    </LinearLayout>
+
+</layout>
