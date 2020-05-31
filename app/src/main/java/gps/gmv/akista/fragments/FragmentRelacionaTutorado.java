@@ -66,6 +66,7 @@ public class FragmentRelacionaTutorado extends Fragment {
     }
 
     private void init() {
+        // Se setean los valores a cadenas vacías para prevenir errores por valores nulos
         binding.setClaveAlumno("");
         binding.setCurpAlumno("");
     }
@@ -76,15 +77,19 @@ public class FragmentRelacionaTutorado extends Fragment {
         binding.btFin.setOnClickListener(v -> registro());
     }
 
+    // Proceso de registro
     private void registro() {
+        // Se comprueba que el campo del CURP no esté vacío
         if (binding.getCurpAlumno().isEmpty()) {
             binding.etCURPAlumno.setError("Ingrese el CURP del alumno");
             return;
+            // Y que tiene la longitud correcta
         } else if (binding.getCurpAlumno().length() < 18) {
             binding.etCURPAlumno.setError("CURP incorrecto, verifique");
             return;
         }
 
+        // Aquí se escribe la clave escolar del alumno
         if (binding.getClaveAlumno().isEmpty()) {
             binding.etClave.setError("Escriba la clave escolar");
             return;
@@ -92,21 +97,26 @@ public class FragmentRelacionaTutorado extends Fragment {
 
         changeVisibility(false);
 
+        // Se busca el alumno existente al que le pertenezca el CURP introducido
         FirebaseDatabase.getInstance()
         .getReference("alumno")
         .child(binding.getCurpAlumno())
         .addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // Si lo encuentra...
                 if (dataSnapshot.exists()) {
                     Alumno a = dataSnapshot.getValue(Alumno.class);
 
+                    // Compara la clave del alumno con la introducida; si coincide...
                     if (a.getClave().equals(binding.getClaveAlumno())) {
+                        // Se crea el objeto Relacion
                         Relacion r = new Relacion();
 
                         r.setIdAlumno(a.getCurp());
                         r.setIdTutor(FirebaseAuth.getInstance().getUid());
 
+                        // Y se inserta en la base de datos
                         FirebaseDatabase.getInstance()
                         .getReference("relacion")
                         .child(binding.getCurpAlumno() + '-' + FirebaseAuth.getInstance().getUid())
@@ -121,10 +131,12 @@ public class FragmentRelacionaTutorado extends Fragment {
                             }
                         });
                     } else {
+                        // Esta parte se ejecuta si se encuentra el alumno pero no coincide la contraseña
                         changeVisibility(true);
                         Snackbar.make(getView(), "Alumno enccontrado, clave incorrecta", Snackbar.LENGTH_LONG).show();
                     }
                 } else {
+                    // Esta parte se ejecuta si no se encontró al Alumno con el CURP introducido
                     changeVisibility(true);
                     Snackbar.make(getView(), "Las credenciales no coinciden con ningún alumno", Snackbar.LENGTH_LONG).show();
                 }

@@ -90,6 +90,7 @@ public class FragmentRegistroGrupo extends Fragment {
     private void downloadData() {
         changeVisibility(false);
 
+        // Los grupos se asignan a un docente por lo que se necesita la lista de los mismos
         FirebaseDatabase.getInstance()
         .getReference("usuario")
         .orderByChild("tipoUsuario")
@@ -97,11 +98,13 @@ public class FragmentRegistroGrupo extends Fragment {
         .addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // Si hay docentes disponibles se guardan
                 if (dataSnapshot.exists()) {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren())
                         docentes.add(snapshot.getValue(Usuario.class));
                     docentesSpinnerAdapter.notifyDataSetChanged();
                 } else {
+                    // De lo contrario se impide continuar con el registro anulando el boton de terminar
                     Snackbar.make(getView(), "No hay docentes disponibles", Snackbar.LENGTH_LONG).show();
                     binding.spDocente.setEnabled(false);
                     binding.btSend.setEnabled(false);
@@ -125,7 +128,9 @@ public class FragmentRegistroGrupo extends Fragment {
         binding.working.setVisibility(visible ? View.GONE : View.VISIBLE);
     }
 
+    // Proceso de registro
     private void registro() {
+        // La clave del grupo no puede quedar vacía
         if (binding.getGrupo().getId().isEmpty()) {
             binding.etGpo.setError("Necesita agregar un identificador");
             return;
@@ -133,8 +138,11 @@ public class FragmentRegistroGrupo extends Fragment {
 
         changeVisibility(false);
 
+        // Se establce el id del docente al que pertenecerá el grupo desde el valor seteado
+        // en el spinner
         binding.getGrupo().setIdDocente(((Usuario) binding.spDocente.getSelectedItem()).getId());
 
+        // Se inserta el grupo en la base de datos
         FirebaseDatabase.getInstance()
         .getReference("grupo")
         .child(binding.getGrupo().getId())

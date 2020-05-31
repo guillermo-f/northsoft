@@ -56,10 +56,10 @@ public class FragmentCalificaciones extends Fragment {
     private FragmentCalificacionesAdapter adapter;
     private FragmentCalificacionesBinding binding;
 
-    private ArrayList<Calificacion> data;
-    private ArrayList<String> relacionesId;
+    private ArrayList<Calificacion> data; // Información de calificaciones para el adaptador
+    private ArrayList<String> relacionesId; // Se guardan los id de los alumnos
 
-    private int selectedItem;
+    private int selectedItem; // Se usa para específicar a un alumno dentro del spinner
 
     @Nullable
     @Override
@@ -76,6 +76,7 @@ public class FragmentCalificaciones extends Fragment {
         setListeners();
     }
 
+    // Se inicializan campos
     private void init() {
         data = new ArrayList<>();
         relacionesId = new ArrayList<>();
@@ -83,11 +84,13 @@ public class FragmentCalificaciones extends Fragment {
         binding.listView.setAdapter(adapter);
 
         changeVisibility(false);
-        downloadRelData();
+        downloadRelData(); // Descarga de los id de los alumnos con los que se tiene relación
         selectedItem = 0;
     }
 
     private void setListeners() {
+        // Los siguientes 5 listeners se accionan al presionar el botón correspondiente del número de
+        // unidad para ver las calificaciones que correspondan
         binding.u1.setOnClickListener(v -> downloadData(relacionesId.get(selectedItem), "1"));
         binding.u2.setOnClickListener(v -> downloadData(relacionesId.get(selectedItem), "2"));
         binding.u3.setOnClickListener(v -> downloadData(relacionesId.get(selectedItem), "3"));
@@ -96,6 +99,7 @@ public class FragmentCalificaciones extends Fragment {
 
         binding.btRegresar.setOnClickListener(v -> getFragmentManager().popBackStack());
 
+        // Al cambiar el elemento seleccionado en el spinner se almacena el valor del índice
         binding.spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -107,6 +111,7 @@ public class FragmentCalificaciones extends Fragment {
     }
 
     private void downloadRelData() {
+        // Se buscan relaciones existences con alumnos
         FirebaseDatabase.getInstance()
         .getReference("relacion")
         .orderByChild("idTutor")
@@ -115,16 +120,20 @@ public class FragmentCalificaciones extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
+                    // De existir se guardan los id
                     SpinnerAdapter<String> adapter = new SpinnerAdapter<>(getContext(), relacionesId);
                     binding.spinner.setAdapter(adapter);
 
                     for (DataSnapshot snapshot : dataSnapshot.getChildren())
                         relacionesId.add(snapshot.getValue(Relacion.class).getIdAlumno());
 
+                    // Por defecto al iniciar se solicitaran los datos de calificaciones para la unidad 1
                     downloadData(relacionesId.get(0), "1");
-                    adapter.notifyDataSetChanged();
+                    adapter.notifyDataSetChanged(); // Se actualiza el spinner de nombres de los usuarios
                 } else {
                     changeVisibility(true);
+                    // De no haber relaciones existentes se inhabilitan los botones de selección
+                    // de unidad y el spinner
                     Snackbar.make(getView(), "No tiene relación con ningún alumno", Snackbar.LENGTH_LONG).show();
 
                     binding.u1.setEnabled(false);
@@ -145,10 +154,12 @@ public class FragmentCalificaciones extends Fragment {
         });
     }
 
+    // Descarga de la información de las calificaciones
     private void downloadData(String alumnoId, String unidad) {
         changeVisibility(false);
-        data.clear();
+        data.clear(); // Se eliminan los datos guardados existentes
 
+        // Se buscan las calificaciones del alumno en base a su id
         FirebaseDatabase.getInstance()
         .getReference("calificacion")
         .orderByChild("alumnoId")
@@ -158,6 +169,7 @@ public class FragmentCalificaciones extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists())
                     for (DataSnapshot snapshot : dataSnapshot.getChildren())
+                        // Y se filtran de acuerdo a la unidad seleccionada
                         if (snapshot.getValue(Calificacion.class).getUnidadMateria().equals(unidad))
                             data.add(snapshot.getValue(Calificacion.class));
 

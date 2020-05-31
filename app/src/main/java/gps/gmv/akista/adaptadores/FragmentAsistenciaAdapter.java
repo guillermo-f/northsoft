@@ -42,6 +42,8 @@ public class FragmentAsistenciaAdapter extends ArrayAdapter<Alumno> {
 
     private HashMap<String, Integer> faltas, justificaciones;
 
+    // El adaptador de asistencia requiere los valores de las faltas y justificaciones de
+    // los alumnos; se guardan y se obtienen mediante HashMap's
     public FragmentAsistenciaAdapter(Context context, List<Alumno> alumnos) {
         super(context, 0, alumnos);
         faltas = new HashMap<>();
@@ -53,7 +55,7 @@ public class FragmentAsistenciaAdapter extends ArrayAdapter<Alumno> {
         LayoutInflater inflater = LayoutInflater.from((parent.getContext()));
         FragmentAsistenciaAdapterBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_asistencia_adapter,null,false);
 
-
+        // Cuando se infla la vista se obtiene la información de los HashMap's y se guarda en el layout mediante databinding
         binding.setAlumno(getItem(position));
         binding.setFaltas(faltas.get(binding.getAlumno().getCurp()) != null ? faltas.get(binding.getAlumno().getCurp()) : 0);
         binding.setJustificaciones(justificaciones.get(binding.getAlumno().getCurp()) != null ? justificaciones.get(binding.getAlumno().getCurp()) : 0);
@@ -61,6 +63,7 @@ public class FragmentAsistenciaAdapter extends ArrayAdapter<Alumno> {
         return binding.getRoot();
     }
 
+    // La información de faltas/justificaciones se envía desde el Fragment donde se aloje el adaptador
     public void setData(HashMap<String, Integer> faltas, HashMap<String, Integer> justificaciones) {
         this.faltas = faltas;
         this.justificaciones = justificaciones;

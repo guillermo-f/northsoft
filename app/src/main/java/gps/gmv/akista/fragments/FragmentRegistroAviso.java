@@ -86,13 +86,15 @@ public class FragmentRegistroAviso extends Fragment {
 
         List<Usuario> spinnerData = new ArrayList<>();
 
+        // Los avisos se envían a los usuarios padres/tutores por lo que se requiere una lista de ellos
         FirebaseDatabase.getInstance()
         .getReference("usuario")
         .orderByChild("tipoUsuario")
-        .equalTo(Usuario.TUTOR)
+        .equalTo(Usuario.TUTOR) // Se buscan en base al campo 'tipoUsuario'
         .addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // Si existen entonces se guardan para mostrarse en un spinner
                 if (dataSnapshot.exists()) {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren())
                         spinnerData.add(snapshot.getValue(Usuario.class));
@@ -101,6 +103,8 @@ public class FragmentRegistroAviso extends Fragment {
                     binding.spinner.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                 } else {
+                    // De lo contrario se desactiva el botón de enviar y el spinner ya que no hay usuarios
+                    // a los que enviar un aviso
                     Snackbar.make(getView(), "No hay usuarios disponibles", Snackbar.LENGTH_LONG).show();
                     binding.spinner.setEnabled(false);
                     binding.btEnviar.setEnabled(false);
@@ -121,8 +125,10 @@ public class FragmentRegistroAviso extends Fragment {
     }
 
     private void registro() {
+        // Se verifican los valores introducidos en el formulario
         HashMap<Integer, String> checks = check();
 
+        // Si la lista de errores está vacia entonces se registra
         if (checks.isEmpty()) {
             changeVisibility(false);
 
@@ -142,11 +148,14 @@ public class FragmentRegistroAviso extends Fragment {
                 }
             });
         } else {
+            // Si hay error alguno éste se setea visualmente.
+            // Si el valor del error es null, no se mostrará
             binding.etMotivo.setError(checks.get(1));
             binding.etMsj.setError(checks.get(2));
         }
     }
 
+    // Se comprueban los valores del formulario para checar la existencia de errores
     private HashMap<Integer, String> check() {
         HashMap<Integer, String> values = new HashMap<>();
 
@@ -159,6 +168,8 @@ public class FragmentRegistroAviso extends Fragment {
         return values;
     }
 
+    // Se intercambia el valor de visibilidad de los elementos principales
+    // con un 'ProgressBar' que se activa cuando se inicia un proceso de red
     private void changeVisibility(boolean visible) {
         binding.top.setVisibility(visible ? View.VISIBLE : View.GONE);
         binding.scroll.setVisibility(visible ? View.VISIBLE : View.GONE);

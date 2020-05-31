@@ -76,19 +76,26 @@ public class FragmentRegistroEventos extends Fragment  implements DatePickerDial
     private void setListeners() {
         binding.btRegresar.setOnClickListener(v -> getFragmentManager().popBackStack());
         binding.btVolver.setOnClickListener(v -> getFragmentManager().popBackStack());
+        // Para elegir la fecha un evento se abre el FragmentEligeFecha donde se muestra un calendario
         binding.btAbreCalendario.setOnClickListener(v -> new FragmentEligeFecha(this).show(getFragmentManager(), null));
+        // Para elegir la hora un evento se abre el FragmentEligeHora donde se muestra un reloj
         binding.btAbreReloj.setOnClickListener(v -> new FragmentEligeHora(this).show(getFragmentManager(), null));
         binding.btEnviar.setOnClickListener(v -> registro());
     }
 
     private void registro() {
+        // Se llama a la comprobación de errores
         HashMap<Integer, String> checks = check();
 
         if (checks.isEmpty()) {
+            // De no haber errores...
             changeVisibility(false);
 
-            binding.getEvento().setFechaHora(parse());
+            binding.getEvento().setFechaHora(parse()); // El valor de la fecha y hora se establece
+                                                       // mediante un valor del tipo long por lo que
+                                                       // las cadenas de fecha y hora se deben convertir
 
+            // Se inserta el valor en la base de datos
             FirebaseDatabase.getInstance()
             .getReference("evento")
             .child(binding.getEvento().getId())
@@ -103,6 +110,7 @@ public class FragmentRegistroEventos extends Fragment  implements DatePickerDial
                 }
             });
         } else {
+            // Existencia de errores
             binding.etNom.setError(checks.get(1));
             binding.btAbreCalendario.setError(checks.get(2));
             binding.btAbreReloj.setError(checks.get(3));
@@ -110,6 +118,7 @@ public class FragmentRegistroEventos extends Fragment  implements DatePickerDial
         }
     }
 
+    // Comprobación de errores
     private HashMap<Integer, String> check() {
         HashMap<Integer, String> values = new HashMap<>();
 
@@ -128,6 +137,7 @@ public class FragmentRegistroEventos extends Fragment  implements DatePickerDial
         return values;
     }
 
+    // Conversión de una fecha en string a long
     private long parse() {
         long longDate = 0L;
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
@@ -141,6 +151,8 @@ public class FragmentRegistroEventos extends Fragment  implements DatePickerDial
         return longDate;
     }
 
+    // Listener del Dialog Fragment que converte los valores de año, mes y día a una cadena con
+    // formato dd/mm/aaaa
     @Override
     public void onDateSet(DatePicker view, int year, int month, int day) {
         month++;
@@ -151,6 +163,8 @@ public class FragmentRegistroEventos extends Fragment  implements DatePickerDial
         );
     }
 
+    // Listener del Dialog Fragment que convierte los valores de la hora a una cadena con
+    // formato hh:mm
     @Override
     public void onTimeSet(TimePicker timePicker, int h, int m) {
         binding.setHora(

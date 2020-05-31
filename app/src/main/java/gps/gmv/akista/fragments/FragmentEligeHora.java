@@ -32,9 +32,10 @@ import androidx.fragment.app.DialogFragment;
 
 import java.util.Calendar;
 
+// DialogFragment especial para elegir una hora al elegir la fecha de un evento
 public class FragmentEligeHora extends DialogFragment {
 
-    FragmentRegistroEventos parent;
+    private FragmentRegistroEventos parent;
 
     public FragmentEligeHora(FragmentRegistroEventos parent) {
         this.parent = parent;

@@ -57,7 +57,7 @@ public class FragmentMensaje extends Fragment {
     private FragmentMensajeAdapter adapter;
     private FragmentMensajeBinding binding;
 
-    private List<Mensaje> mensajes;
+    private List<Mensaje> mensajes; // Aquí se guardan los mensajes de la conversación
 
     @Nullable
     @Override
@@ -75,11 +75,16 @@ public class FragmentMensaje extends Fragment {
     }
 
     private void init() {
+        // Se setea el mensaje inicial a cadena vacía para evitar excepciones por valores nulos
         binding.setMsj("");
         mensajes = new ArrayList<>();
+        // Al abrir el fragment se recibe el nombre del otro participante mediante un bundle
+        // y se envía al adaptador
         adapter = new FragmentMensajeAdapter(getContext(), mensajes, getArguments().getString("nom"));
         binding.mensajes.setAdapter(adapter);
 
+        // Se baja de la base de datos el objeto Usuario que pertenece al otro participante del chat
+        // para integrarlo en el layout
         FirebaseDatabase.getInstance()
         .getReference("usuario")
         .child(getArguments().getString("id"))
@@ -87,6 +92,8 @@ public class FragmentMensaje extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists())
+                    // El usuario debe de existir pero se atrapan los errores por cualquierr detalle
+                    // que pueda ocurrir
                     binding.setUsuarioDestino(dataSnapshot.getValue(Usuario.class));
                 else {
                     Snackbar.make(getView(), "Ocurrió un error", Snackbar.LENGTH_LONG).show();
@@ -101,13 +108,22 @@ public class FragmentMensaje extends Fragment {
             }
         });
 
+        // Se descargan los mensajes de la base de datos siguiendo la ruta:
+        //mensaje/id-del-usuario-actual/id-del-otro-miembro-del-chat
         FirebaseDatabase.getInstance()
         .getReference("mensaje/" + FirebaseAuth.getInstance().getUid() + '/' + getArguments().getString("id"))
         .addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                // El listener se activa cada que se agrega un mensaje a la conversación o durante
+                // la descarga inicial de todos
+
+                // Al recibir los mensajes se ordenan por fechas apoyados del metodo sort
+                // de la clase Collections
                 mensajes.add(dataSnapshot.getValue(Mensaje.class));
                 Collections.sort(mensajes);
+
+                // Se actualiza el adaptador para visualizar los mensajes
                 adapter.notifyDataSetChanged();
             }
 
@@ -128,6 +144,9 @@ public class FragmentMensaje extends Fragment {
         binding.send.setOnClickListener(v -> enviar());
     }
 
+    // Para enviar un mensaje éste debe tener al menos un caracter, no se pueden enviar mensajes
+    // vacíos. Dichos mensajes se guardan en dos ubicaciones: en la lista de mensajes de los chats
+    // del propio usuario y del otro usuario miembro del chat
     private void enviar() {
         if (!binding.getMsj().isEmpty()) {
             Mensaje m = new Mensaje();

@@ -30,6 +30,7 @@ import java.util.List;
 
 public class SpinnerAdapter<T> extends ArrayAdapter<T> {
 
+    // Adapter general para los Spinners usados en la app para evitar código engorroso
     public SpinnerAdapter(Context context, List<T> list) {
         super(context, android.R.layout.simple_spinner_item, list);
         setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

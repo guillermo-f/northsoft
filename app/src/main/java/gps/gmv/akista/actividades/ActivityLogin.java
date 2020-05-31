@@ -60,20 +60,24 @@ public class ActivityLogin extends AppCompatActivity implements FirebaseAuth.Aut
         .commit();
     }
 
+    // Método de escucha que se lanza cuando se inicia la sesión de la app mediante Firebase
     @Override
     public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
         if (firebaseAuth.getCurrentUser() != null) {
             binding.main.setVisibility(View.GONE);
             binding.working.setVisibility(View.VISIBLE);
 
+            // Se descarga la información del usuario desde la base de datos
             FirebaseDatabase.getInstance().
             getReference("usuario").
-            child(FirebaseAuth.getInstance().getUid())
+            child(FirebaseAuth.getInstance().getUid()) // el ID a buscar proviene de Firebase Auth
             .addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     Singleton.getInstance().setUsuario(dataSnapshot.getValue(Usuario.class));
 
+                    // Cuando se descarga el usuario se guarda en el objeto Singleton y se
+                    // abre el ActivityMain
                     startActivity(new Intent(ActivityLogin.this, ActivityMain.class));
                     finish();
                 }

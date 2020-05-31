@@ -49,6 +49,7 @@ public class FragmentMainAdapter extends ArrayAdapter<Alumno> {
         LayoutInflater inflater = LayoutInflater.from((parent.getContext()));
         FragmentMainAdapterBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_main_adapter,null,false);
 
+        // Se guarda la información del alumno/hijo/relacionado en el layout mediante databinding y se muestra a la vez
         binding.setAlumno(getItem(position));
 
         return binding.getRoot();

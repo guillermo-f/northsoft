@@ -47,6 +47,7 @@ public class FragmentMensajesAdapter extends ArrayAdapter<String> {
         LayoutInflater inflater = LayoutInflater.from((parent.getContext()));
         FragmentMensajesAdapterBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_mensajes_adapter,null,false);
 
+        // Se inserta el nombre del usuario miembro de la conversación mediante databinding
         binding.setRemitente(getItem(position));
 
         return binding.getRoot();

@@ -57,7 +57,7 @@ public class FragmentAsistencia extends Fragment {
     private FragmentAsistenciaAdapter adapter;
     private FragmentAsistenciaBinding binding;
 
-    private ArrayList<Alumno> data;
+    private ArrayList<Alumno> data; // Aquí se almacena la información de los alumnos
 
     @Nullable
     @Override
@@ -74,13 +74,15 @@ public class FragmentAsistencia extends Fragment {
         setListeners();
     }
 
+    // Se inicializan valores
     private void init() {
         data = new ArrayList<>();
         adapter = new FragmentAsistenciaAdapter(getContext(), data);
         binding.listView.setAdapter(adapter);
-        downloadData();
+        downloadData(); // se descarga la información desde Firebase Database
     }
 
+    // Funcionalidad a los botones
     private void setListeners() {
         binding.btRegresar.setOnClickListener(v -> getActivity().getSupportFragmentManager().popBackStack());
     }
@@ -94,19 +96,22 @@ public class FragmentAsistencia extends Fragment {
         HashMap<String, Integer> faltasHM = new HashMap<>(),
                                  justifHM = new HashMap<>();
 
-        FirebaseDatabase.getInstance().
-        getReference("relacion")
-        .orderByChild("idTutor")
-        .equalTo(FirebaseAuth.getInstance().getUid())
+        // Se busca en el espacio de "relacion" a los alumnos que tengan relación alguna con el usuario
+        // que usa la app
+        FirebaseDatabase.getInstance()
+        .getReference("relacion")
+        .orderByChild("idTutor")                      // mediante el campo idTutor el cual tiene que
+        .equalTo(FirebaseAuth.getInstance().getUid()) // coincidir con el id del usuario
         .addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
+                if (dataSnapshot.exists()) { // Si se encuentran relaciones se guardan los id de los alumnos
                     for (DataSnapshot snapshot : dataSnapshot.getChildren())
                         aluIds.add(snapshot.getValue(Relacion.class).getIdAlumno());
 
-                    getAsist(aluIds, faltasHM, justifHM);
+                    getAsist(aluIds, faltasHM, justifHM); // Se inicia la busqueda de los alumnos
                 } else {
+                    // Éste codigo se ejecuta si no se encuentran alumnos relacionados con el usuario
                     Snackbar.make(getView(), "No tiene relación con ningún alumno", Snackbar.LENGTH_LONG).show();
                     binding.working.setVisibility(View.GONE);
                     binding.clear.setVisibility(View.VISIBLE);
@@ -120,25 +125,24 @@ public class FragmentAsistencia extends Fragment {
                 Snackbar.make(getView(), databaseError.getMessage(), Snackbar.LENGTH_LONG).show();
             }
         });
-        /*
-
-        */
     }
 
     private void getAsist(ArrayList<String> aluIds, HashMap<String, Integer> faltasHM, HashMap<String, Integer> justifHM) {
         for (String str : aluIds)
+            // Por cada id contenido en la lista se buscará al alumno en la base de datos
             FirebaseDatabase.getInstance()
             .getReference("alumno")
-            .orderByChild("curp")
+            .orderByChild("curp") // La "llave principal" de los alumnos en la app es el CURP
             .equalTo(str)
             .addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     if (dataSnapshot.exists()) {
                         for (DataSnapshot snapshot : dataSnapshot.getChildren())
+                            // Y se guardará en el arreglo principal del fragment
                             data.add(snapshot.getValue(Alumno.class));
 
-                        getReport(aluIds, faltasHM, justifHM);
+                        getReport(aluIds, faltasHM, justifHM); // Se buscan los datos de la asistencia
                     }
                 }
 
@@ -154,6 +158,8 @@ public class FragmentAsistencia extends Fragment {
 
     private void getReport(ArrayList<String> aluIds, HashMap<String, Integer> faltasHM, HashMap<String, Integer> justifHM) {
         for (String str : aluIds)
+            // Por cada id contenido en la lista se buscan todos los datos de asistencia
+            // que pertenezcan al alumno que le corresponda el id
             FirebaseDatabase.getInstance()
             .getReference("asistencia")
             .orderByChild("idAlumno")
@@ -162,27 +168,34 @@ public class FragmentAsistencia extends Fragment {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     if (dataSnapshot.exists()) {
-                        int faltas = 0, justificaciones = 0;
-
+                        int faltas = 0, justificaciones = 0; // Se establecen contadores para las
+                                                             // incidencias de falta o justificacion
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             Asistencia a = snapshot.getValue(Asistencia.class);
+
+                            // Dependiendo del valor de la asistencia se incrementa el contador específico
                             if (a.getAsistencia() == Asistencia.FALTA)
                                 faltas++;
                             else if (a.getAsistencia() == Asistencia.JUSTIF)
                                 justificaciones++;
                         }
 
+                        // Se insertan los valores en HashMap's
                         faltasHM.put(str, faltas);
                         justifHM.put(str, justificaciones);
 
 
                     } else {
+                        // De no haber información de asistencia que pertenezca al alumno
+                        // se guarda el valor de 0
                         faltasHM.put(str, 0);
                         justifHM.put(str, 0);
                     }
 
+                    // Se envían los HashMap's al adaptador
                     adapter.setData(faltasHM, justifHM);
 
+                    // Se reestablece la vista del fragment y se actualiza el adaptador del listView
                     binding.top.setVisibility(View.VISIBLE);
                     binding.working.setVisibility(View.GONE);
                     binding.listView.setVisibility(View.VISIBLE);

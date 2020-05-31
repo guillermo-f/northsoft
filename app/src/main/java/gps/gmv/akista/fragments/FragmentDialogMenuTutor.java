@@ -41,6 +41,8 @@ import gps.gmv.akista.R;
 import gps.gmv.akista.databinding.FragmentDialogMenuTutorBinding;
 import gps.gmv.akista.otros.Singleton;
 
+// DialogFragment que contiene botones para diversas acciones, en este caso para un usuario normal
+// que puede ser padre, tutor, tío, etc.
 public class FragmentDialogMenuTutor extends DialogFragment {
 
     private FragmentDialogMenuTutorBinding binding;

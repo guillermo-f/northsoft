@@ -61,7 +61,9 @@ public class FragmentMain extends Fragment {
 
     private FragmentMainAdapter adapter;
     private FragmentMainBinding binding;
-    private DialogFragment fd;
+    private DialogFragment fd; // Se usan dos dialog fragment para mostrar el menu de la app
+                               // así que al heredar de la misma clase se puede instanciar desde
+                               // la super clase
 
     @Nullable
     @Override
@@ -79,10 +81,12 @@ public class FragmentMain extends Fragment {
     }
 
     private void init() {
+        // Se inician valores
         List<Alumno> source = new ArrayList<>();
         adapter = new FragmentMainAdapter(getContext(), source);
         binding.listView.setAdapter(adapter);
 
+        // Se busca si el ausuario actual tiene relación alguna con uno o mas alumnos
         FirebaseDatabase.getInstance()
         .getReference("relacion")
         .orderByChild("idTutor")
@@ -91,6 +95,7 @@ public class FragmentMain extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists())
+                    // Si las hay, descarga los alumnos desde la base de datos
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         FirebaseDatabase.getInstance()
                         .getReference("alumno")
@@ -98,6 +103,8 @@ public class FragmentMain extends Fragment {
                         .addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot local) {
+                                // Guarda al información en la llista y se actualiza el adaptador
+                                // para mostrar la información en pantalla
                                 source.add(local.getValue(Alumno.class));
                                 adapter.notifyDataSetChanged();
                             }
@@ -113,6 +120,8 @@ public class FragmentMain extends Fragment {
             }
         });
 
+        // Se buscan avisos enviados al usuario actual y se muestran cada que el usuario
+        // abre esta pantalla
         FirebaseDatabase.getInstance()
         .getReference("aviso")
         .orderByChild("destinatario")
@@ -124,11 +133,15 @@ public class FragmentMain extends Fragment {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         Aviso a = snapshot.getValue(Aviso.class);
 
+                        // Si existe un aviso, se descarga su información y se muestra mediante un
+                        // alert dialog el cual contiene un botón para eliminar dicho aviso de la base
+                        // de datos después de verlo
                         new AlertDialog.Builder(getActivity())
                         .setTitle(a.getMotivo())
                         .setMessage(a.getMensaje() + "\n\n" + Singleton.getInstance().parseDate(a.getFechaMensaje()))
                         .setCancelable(false)
                         .setNeutralButton("OK", ((dialogInterface, i) -> {
+                            // Aquí es donde se elimina el aviso
                             FirebaseDatabase.getInstance()
                             .getReference("aviso/" + a.getId())
                             .removeValue();
@@ -145,6 +158,9 @@ public class FragmentMain extends Fragment {
     }
 
     private void setListeners() {
+        // Al presionar el boton de menú se compara si el tipo de usuario
+        // corresponde a un tutor o a un docente ya que el menú que se les mostrará a ambos
+        // es diferente
         binding.btMenu.setOnClickListener(v -> {
             if (Singleton.getInstance().getUsuario().getTipoUsuario() == 1) {
                 fd = new FragmentDialogMenuTutor(this);
@@ -155,9 +171,13 @@ public class FragmentMain extends Fragment {
             }
         });
 
+        // Se abre la pantalla de mensajes
         binding.btMsj.setOnClickListener(v -> setFragment(new FragmentMensajes()));
     }
 
+    // Se ve el reporte de asistencia o se abre el pase de lista manual
+    // (OJO el pase de lista manual es un auxiliar en caso de haber problemas con el reconocimiento
+    //  facial)
     void verAsistencia(View view) {
         fd.dismiss();
 
@@ -167,6 +187,8 @@ public class FragmentMain extends Fragment {
             setFragment(new FragmentPaseListaManual());
     }
 
+    // Se abre el reporte de calificaciones para los hijos en caso de ser un padre/tutuor
+    // o abre el registro de calificaciones
     void verCalificaciones(View view) {
         fd.dismiss();
 
@@ -176,6 +198,8 @@ public class FragmentMain extends Fragment {
             setFragment(new FragmentRegistraCalificaciones());
     }
 
+    // Abre la pantalla del calendario para ver los eventos que ha programado la escuela o
+    // abre la pantalla para registrarlos según el tipo de usuario
     void verCalendario(View view) {
         fd.dismiss();
 
@@ -185,26 +209,34 @@ public class FragmentMain extends Fragment {
             setFragment(new FragmentRegistroEventos());
     }
 
+
+    // Desde aquí se registra a un alumno
     private void registraAlumno() {
         fd.dismiss();
         setFragment(new FragmentRegistraTutorado());
     }
 
+    // Pantalla para crear un nuevo aviso
     void nuevoAviso(View view) {
         fd.dismiss();
         setFragment(new FragmentRegistroAviso());
     }
 
+    // Pantalla para registrar una relación con un alumno existente
     void registraHijo(View view) {
         fd.dismiss();
         setFragment(new FragmentRelacionaTutorado());
     }
 
+    // Pantalla para registrar un grupo
     private void registroGrupo() {
         fd.dismiss();
         setFragment(new FragmentRegistroGrupo());
     }
 
+    // Para registrar alumnos o crear grupos es necesario comprobar que el usuario tiene la
+    // contraseña maestra del sistema por lo que se le pedirá ingresarla y se descargará de la base
+    // de datos para compararla
     void comprobar(String pass, int go) {
         FirebaseDatabase.getInstance()
         .getReference("CLAVE_GENERAL")
@@ -214,11 +246,14 @@ public class FragmentMain extends Fragment {
                 if (dataSnapshot.getValue(String.class).equals(pass)) {
                     ((FragmentDialogMenuAdmin)fd).dialogContrasena.dismiss();
 
+                    // El valor "go" recibido indica a cual pantalla se deseaba acceder en un principio
+                    // El 1 para crear grupos y el 2 para registrar alumnos
                     if (go == 2)
                         registraAlumno();
                     else
                         registroGrupo();
                 } else {
+                    // Si la contraseña resultó incorrecta se muestra un mensaje de error.
                     new AlertDialog.Builder(getActivity())
                     .setTitle("Error")
                     .setMessage("Contraseña incorrecta")
@@ -241,6 +276,7 @@ public class FragmentMain extends Fragment {
         });
     }
 
+    // Método "maestro" para cambiar el fragment actual que muestra la app sobre la pantalla
     private void setFragment(Fragment fragment) {
         getActivity()
         .getSupportFragmentManager()

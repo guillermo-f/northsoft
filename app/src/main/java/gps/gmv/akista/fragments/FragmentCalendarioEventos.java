@@ -58,7 +58,8 @@ public class FragmentCalendarioEventos extends Fragment {
     private FragmentCalendarioEventosAdapter adapter;
     private FragmentCalendarioEventosBinding binding;
 
-    private ArrayList<Evento> _events;
+    private ArrayList<Evento> _events; // Aquí se guarda la información de los eventos almacenados
+                                       // en el día seleccionado dentro del calendario
 
     @Nullable
     @Override
@@ -82,7 +83,9 @@ public class FragmentCalendarioEventos extends Fragment {
         binding.calendar.setFirstDayOfWeek(Calendar.SUNDAY);
         binding.calendar.setUseThreeLetterAbbreviation(true);
         downloadData();
-        setMonth(Calendar.getInstance().get(Calendar.MONTH));
+        setMonth(Calendar.getInstance().get(Calendar.MONTH)); // Se establece el mes en el layout
+                                                              // mediante el metodo setMonth
+                                                              // ya que no se muestra en la vista
     }
 
     private void setListeners() {
@@ -90,10 +93,14 @@ public class FragmentCalendarioEventos extends Fragment {
         binding.calendar.setListener(new CompactCalendarView.CompactCalendarViewListener() {
             @Override
             public void onDayClick(Date date) {
-                displayEvents(date);
+                displayEvents(date); // Cuando se selecciona un día se muestran los eventos
+                                     // almacenados en el
             }
 
             @Override public void onMonthScroll(Date firstDayOfNewMonth) {
+                // Al hacer scroll entre meses se actualiza tanto el nombre del mes mostrado
+                // como los eventos mostrados en la vista ya que al hacer scroll se selecciona
+                // el día primero de cada mes
                 setMonth(firstDayOfNewMonth.getMonth());
                 displayEvents(firstDayOfNewMonth);
             }
@@ -109,6 +116,9 @@ public class FragmentCalendarioEventos extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists())
+                    // Se baja desde el espacio de "evento" todos los eventos
+                    // y se almacenan en el calendario para posteriormente mostrarlos
+                    // al hacer clic en algún día
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         Evento e = snapshot.getValue(Evento.class);
                         binding.calendar.addEvent(new Event(Color.WHITE, e.getFechaHora(), e));
@@ -124,6 +134,7 @@ public class FragmentCalendarioEventos extends Fragment {
         changeVisibility(true);
     }
 
+    // Método para esconder los elementos de la vista y mostrar un elemento que alude a un "cargando"
     private void changeVisibility(boolean visible) {
         binding.dummy.setVisibility(visible ? View.VISIBLE : View.GONE);
         binding.calendar.setVisibility(visible ? View.VISIBLE : View.GONE);
@@ -131,6 +142,7 @@ public class FragmentCalendarioEventos extends Fragment {
         binding.working.setVisibility(visible ? View.GONE : View.VISIBLE);
     }
 
+    // Según el valor recibido se regresa una cadena
     private void setMonth(int m) {
         switch (m) {
             case 0:
@@ -172,6 +184,7 @@ public class FragmentCalendarioEventos extends Fragment {
         }
     }
 
+    // Actualiza los eventos a mostrar y se obtienen del calendario a través del día seleccionado
     private void displayEvents(Date date) {
         List<Event> events = binding.calendar.getEvents(date);
         _events.clear();

@@ -88,6 +88,7 @@ public class FragmentRegistraCalificaciones extends Fragment {
         alumnoSpinnerAdapter = new SpinnerAdapter<>(getContext(), spinnerAlumnoData);
         binding.spAlumno.setAdapter(alumnoSpinnerAdapter);
 
+        // Se almacenan los valores en cadenas para escoger las unidades mediante un spinner
         List<String> unidadSpinnerData = new ArrayList<>();
         unidadSpinnerData.add("1");
         unidadSpinnerData.add("2");
@@ -99,6 +100,8 @@ public class FragmentRegistraCalificaciones extends Fragment {
         binding.spUnidad.setAdapter(unidadSpinnerAdapter);
         unidadSpinnerAdapter.notifyDataSetChanged();
 
+        // Los alumnos están asignados a un grupo por lo que se comprueba primero si el docente
+        // tiene algun grupo asignado
         FirebaseDatabase.getInstance()
         .getReference("grupo")
         .orderByChild("idDocente")
@@ -106,12 +109,14 @@ public class FragmentRegistraCalificaciones extends Fragment {
         .addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // Si tiene grupos asignados se guarda la información de los mismos
                 if (dataSnapshot.exists()) {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren())
                         grupoSpinnerData.add(snapshot.getValue(Grupo.class));
 
                     set();
                 } else {
+                    // de lo contrario se le impide realizar cualquier acción
                     binding.btSend.setEnabled(false);
                     changeVisibility(true);
                     Snackbar.make(getView(), "Imposible registrar calificaciones: no tiene grupos asignados", Snackbar.LENGTH_LONG).show();
@@ -126,6 +131,10 @@ public class FragmentRegistraCalificaciones extends Fragment {
     }
 
     private void set() {
+        // Se descargan los nombres de las materias disponibles en la base de datos.
+        // Dichas materias se agregan de forma "administrativa" a la base de datos, es decir,
+        // la escuela se pone en contacto con los desarrolladores (nosotros) para actualizar
+        // dicha tabla cuando sea necesario
         List<String> materiaSpinnerData = new ArrayList<>();
 
         FirebaseDatabase.getInstance()
@@ -152,6 +161,7 @@ public class FragmentRegistraCalificaciones extends Fragment {
         binding.spGpo.setAdapter(grupoSpinnerAdapter);
         grupoSpinnerAdapter.notifyDataSetChanged();
 
+        // Por defecto se cargaran los datos del primer alumno que se encuentre
         if (!spinnerAlumnoData.isEmpty())
             downloadAlu(spinnerAlumnoData.get(0).getGrupo());
 
@@ -171,6 +181,7 @@ public class FragmentRegistraCalificaciones extends Fragment {
         binding.btSend.setOnClickListener(v -> enviar());
     }
 
+    // Aquí se baja la información de todos los alumnos pertenecientes a un grupo
     private void downloadAlu(String grupo) {
         changeVisibility(false);
         spinnerAlumnoData.clear();
@@ -182,12 +193,15 @@ public class FragmentRegistraCalificaciones extends Fragment {
         .addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // Si el grupo tiene alumos se guardan los mismos
                 if (dataSnapshot.exists()) {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren())
                         spinnerAlumnoData.add(snapshot.getValue(Alumno.class));
+                    binding.btSend.setEnabled(true);
                     alumnoSpinnerAdapter.notifyDataSetChanged();
                     changeVisibility(true);
                 } else {
+                    // Si el grupo está vació entonces no se pueden registrar calififaciones
                     binding.btSend.setEnabled(false);
                     Snackbar.make(getView(), "Imposible registrar calificaciones: grupo sin alumnos", Snackbar.LENGTH_LONG).show();
                     changeVisibility(true);
@@ -208,9 +222,11 @@ public class FragmentRegistraCalificaciones extends Fragment {
         binding.working.setVisibility(visible ? View.GONE : View.VISIBLE);
     }
 
+    // Aquí se sube una calificación...
     private void enviar() {
         Double califDouble;
 
+        // Se comprueba que el valor de la nota sea un valor válido entre 0 y 100; puede tener valores decimales
         try {
             califDouble = Double.parseDouble(binding.getCalif());
         } catch (Exception ex) {
@@ -223,6 +239,8 @@ public class FragmentRegistraCalificaciones extends Fragment {
             return;
         }
 
+        // Se crea el objeto de calificación y se rellenan sus datos de acuerdo a los valores
+        // seleccionados de los spinner y a la calificación introducida.
         Calificacion c = new Calificacion();
         Alumno a = (Alumno) binding.spAlumno.getSelectedItem();
         c.setAlumnoId(a.getCurp());
@@ -231,6 +249,7 @@ public class FragmentRegistraCalificaciones extends Fragment {
         c.setNombreMateria((String) binding.spMateria.getSelectedItem());
         c.setUnidadMateria((String) binding.spUnidad.getSelectedItem());
 
+        // Se le pregunta al docente que confirme si desea registrar la calificación
         new AlertDialog.Builder(getActivity())
         .setTitle("Confirmación")
         .setMessage("Confirma que desea asignar la calificación de " + c.getCalif() + " a " + a.getNombre() + " en la unidad " + c.getUnidadMateria())
@@ -239,6 +258,7 @@ public class FragmentRegistraCalificaciones extends Fragment {
         .setPositiveButton("Si", ((dialogInterface, i) -> {
             changeVisibility(false);
 
+            // Se inserta en la base de datos
             FirebaseDatabase.getInstance()
             .getReference("calificacion")
             .child(c.getId())

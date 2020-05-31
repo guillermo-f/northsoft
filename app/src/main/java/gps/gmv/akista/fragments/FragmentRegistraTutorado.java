@@ -76,11 +76,14 @@ public class FragmentRegistraTutorado extends Fragment {
 
         List<String> spinnerData = new ArrayList<>();
 
+        // Al registrar un alumno se registra también a que grupo pertenece por lo que se debe
+        // descargar primero la lista de grupos disponibles
         FirebaseDatabase.getInstance()
         .getReference("grupo")
         .addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // Si hay grupos disponibles entonces se guardan y se muestran en un spinner
                 if (dataSnapshot.exists()) {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren())
                         spinnerData.add(snapshot.getValue(Grupo.class).getId());
@@ -91,6 +94,7 @@ public class FragmentRegistraTutorado extends Fragment {
 
                     changeVisibility(true);
                 } else {
+                    // Si no hay grupos se impide el registro de cualquier alumno y se desactiva el botón de registro
                     binding.btFin.setEnabled(false);
 
                     Snackbar.make(getView(), "Imposible registrar alumno: no hay grupos", Snackbar.LENGTH_LONG)
@@ -122,11 +126,15 @@ public class FragmentRegistraTutorado extends Fragment {
 
     private void registro() {
         changeVisibility(false);
-        HashMap<Integer, String> checks = check();
+        HashMap<Integer, String> checks = check(); // Se manda a llamar al metodo check
+                                                   // para la comprobación de valores inválidos
 
+        // Si el HashMap devuelto está vacío entonces el registro procede
         if (checks.isEmpty()) {
+            // Se asigna el grupo al alumno de acuerdo al elegido por el spinner
             binding.getAlumno().setGrupo((String) binding.spinner.getSelectedItem());
 
+            // Se inserta el Alumno en la base de datos
             FirebaseDatabase.getInstance()
             .getReference("alumno")
             .child(binding.getAlumno().getCurp())
@@ -141,6 +149,9 @@ public class FragmentRegistraTutorado extends Fragment {
                 }
             });
         } else {
+            // Si la lista de errores no está vacía se activan los errores específicos.
+            // Es posible que solo exista un error o que todos los errores estén presentes por lo
+            // si el valor de alguna llave es null entonces el error visualmente se desactiva
             changeVisibility(true);
 
             binding.etNom.setError(checks.get(1));
@@ -152,6 +163,7 @@ public class FragmentRegistraTutorado extends Fragment {
         }
     }
 
+    // Aquí se comprueban los valores introducidos en los campos del registro
     private HashMap<Integer, String> check() {
         HashMap<Integer, String> values = new HashMap<>();
 

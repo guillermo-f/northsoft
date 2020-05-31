@@ -48,6 +48,7 @@ public class FragmentCalificacionesAdapter extends ArrayAdapter<Calificacion> {
         LayoutInflater inflater = LayoutInflater.from((parent.getContext()));
         FragmentCalificacionesAdapterBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_calificaciones_adapter,null,false);
 
+        // Se guarda la información de la calificación en el layout mediante databinding y se muestra a la vez
         binding.setCalificacion(getItem(position));
 
         return binding.getRoot();

@@ -52,6 +52,7 @@ public class ActivityMain extends AppCompatActivity implements FirebaseAuth.Auth
         .commit();
     }
 
+    // Si el usuario cierra la sesión de Firebase se regresa al ActivityLogin
     @Override
     public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
         if (!(firebaseAuth.getCurrentUser() != null && !firebaseAuth.getCurrentUser().isAnonymous())) {

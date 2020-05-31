@@ -49,6 +49,7 @@ public class FragmentCalendarioEventosAdapter extends ArrayAdapter<Evento> {
         LayoutInflater inflater = LayoutInflater.from((parent.getContext()));
         FragmentCalendarioEventosAdapterBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_calendario_eventos_adapter,null,false);
 
+        // Se guarda la información del evento en el layout mediante databinding y se muestra a la vez
         binding.setEvento(getItem(position));
         binding.setFecha(Singleton.getInstance().parseDate(getItem(position).getFechaHora()));
 

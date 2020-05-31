@@ -31,6 +31,7 @@ import java.util.Date;
 
 import gps.gmv.akista.entidades.Usuario;
 
+// En este Singleton se almacena el objeto Usuario perteneciente a quien inicie sesión dentro de la misma
 public class Singleton {
 
     private Usuario usuario;
@@ -50,6 +51,7 @@ public class Singleton {
         this.usuario = usuario;
     }
 
+    // Además contiene un metodo que convierte los valores 'long' a su equivalente en una fecha string
     public String parseDate(long fecha) {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         Date resultdate = new Date(fecha);

@@ -36,6 +36,8 @@ import androidx.fragment.app.DialogFragment;
 import gps.gmv.akista.R;
 import gps.gmv.akista.databinding.FragmentDialogContrasenaBinding;
 
+// Fragment simple para introducir la contraseña de administrador que se solicita al querer
+// registrar un alumno o un grupo en la base de datos de la app
 public class FragmentDialogContrasena extends DialogFragment {
 
     FragmentDialogContrasenaBinding binding;

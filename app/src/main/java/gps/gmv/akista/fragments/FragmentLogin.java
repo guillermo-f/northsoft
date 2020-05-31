@@ -41,6 +41,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import gps.gmv.akista.R;
 import gps.gmv.akista.databinding.FragmentLoginBinding;
 
+// Pantalla de inicio de sesión
 public class FragmentLogin extends Fragment {
 
     private FragmentLoginBinding binding;
@@ -60,12 +61,14 @@ public class FragmentLogin extends Fragment {
         setListeners();
     }
 
+    // Se setean los valores iniciales a cadenas vacías para evitar excepciones por valores nulos
     private void init() {
         binding.setCorreoElectronico("");
         binding.setContrasena("");
     }
 
     private void setListeners() {
+        // Acción del botón para abrir la pantalla de registro como padre/tutor
         binding.tvReg.setOnClickListener(v ->
             getActivity()
             .getSupportFragmentManager()
@@ -76,15 +79,18 @@ public class FragmentLogin extends Fragment {
         );
 
         binding.btLogin.setOnClickListener(v -> {
+            // Se procesa el correo y se verfica que tenga un patron válido
             if (Patterns.EMAIL_ADDRESS.matcher(binding.getCorreoElectronico()).matches()) {
+                // La longitud mínima de una contraseña es de 8 caracteres por lo que si es menor
+                // no se podrá iniciar el proceso
                 if (binding.getCorreoElectronico().length() >= 8) {
-                    if (!binding.getContrasena().isEmpty() && !binding.getCorreoElectronico().isEmpty()) {
-                        FirebaseAuth.getInstance().signInWithEmailAndPassword(binding.getCorreoElectronico(), binding.getContrasena())
-                        .addOnCompleteListener(getActivity(), task -> {
-                            if (!task.isSuccessful())
-                                Snackbar.make(binding.main, "No se encontró una cuenta con esas credenciales.\nVerifique sus datos por favor.", Snackbar.LENGTH_LONG).show();
-                        });
-                    }
+                    // Se inicia el proceso de inicio de sesión
+                    FirebaseAuth.getInstance().signInWithEmailAndPassword(binding.getCorreoElectronico(), binding.getContrasena())
+                    .addOnCompleteListener(getActivity(), task -> {
+                        // Si no se encuentra el usuario se lanza un mensaje de error
+                        if (!task.isSuccessful())
+                            Snackbar.make(binding.main, "No se encontró una cuenta con esas credenciales.\nVerifique sus datos por favor.", Snackbar.LENGTH_LONG).show();
+                    });
                 }
                 else
                     Snackbar.make(binding.main, "Verifique su contraseña.", Snackbar.LENGTH_LONG).show();

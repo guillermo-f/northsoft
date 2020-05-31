@@ -42,7 +42,8 @@ import gps.gmv.akista.otros.Singleton;
 
 public class FragmentMensajeAdapter extends ArrayAdapter<Mensaje> {
 
-    private String otr;
+    private String otr; // otr es la cadena que corresponde al nombre
+                        // del otro usuario de la conversación
 
     public FragmentMensajeAdapter(Context context, List<Mensaje> mensajes, String otr) {
         super(context, 0, mensajes);
@@ -58,6 +59,9 @@ public class FragmentMensajeAdapter extends ArrayAdapter<Mensaje> {
 
         binding.setMsj(m);
         binding.setFecha(Singleton.getInstance().parseDate(m.getFecha()));
+
+        // Si el ID del remitente es diferente del ID del usuario que usa la app
+        // el nombre que aparecerá en el mensaje es el del otro usuario
         if (!m.getIdRemitente().equals(FirebaseAuth.getInstance().getUid()))
             binding.setRemitente(otr);
 

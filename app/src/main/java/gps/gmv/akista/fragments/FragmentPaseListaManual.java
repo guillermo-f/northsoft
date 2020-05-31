@@ -86,12 +86,16 @@ public class FragmentPaseListaManual extends Fragment {
     }
 
     private void init() {
+        // Existen tres valores de asistencia los cuales se muestran explicitamente a continuacioń
         List<String> asistSpinnerData = new ArrayList<>();
         asistSpinnerData.add("Asistencia");
         asistSpinnerData.add("Falta");
         asistSpinnerData.add("Justificada");
 
+        // Lista donde se guarda la info de los alumnos del grupo seleccionado
         alumnoSpinnerData = new ArrayList<>();
+
+        // Lista para la info de los grupos existenets
         grupoSpinnerData = new ArrayList<>();
 
         alumnoSpinnerAdapter = new SpinnerAdapter<>(getContext(), alumnoSpinnerData);
@@ -104,7 +108,7 @@ public class FragmentPaseListaManual extends Fragment {
         binding.spAsistencia.setAdapter(asistSpinnerAdapter);
         asistSpinnerAdapter.notifyDataSetChanged();
 
-        downloadData();
+        downloadData(); // Se procede a descargar la información
     }
 
     private void setListeners() {
@@ -112,6 +116,7 @@ public class FragmentPaseListaManual extends Fragment {
         binding.btSend.setOnClickListener(v -> registro());
     }
 
+    // Se descarga la información de los grupos existentes
     private void downloadData() {
         changeVisibility(false);
 
@@ -125,9 +130,11 @@ public class FragmentPaseListaManual extends Fragment {
                         grupoSpinnerData.add(snapshot.getValue(Grupo.class));
                     grupoSpinnerAdapter.notifyDataSetChanged();
 
+                    // De haber grupos se descargan entonces los alumnos del grupo
                     enableErrorA(null, false);
                     get(grupoSpinnerData.get(0).getId());
                 } else {
+                    // De lo contrario no lo hace
                     changeVisibility(true);
                     enableErrorA("Imposible registrar asistencia, no hay grupos", true);
                 }
@@ -141,6 +148,8 @@ public class FragmentPaseListaManual extends Fragment {
         });
     }
 
+    // Este metodo anula varios elementos de la pantalla mediante el metodo setFlags
+    // y parte anula uno extra; si el valor de flag es 'true' despliega el mensaje que se le envíe
     private void enableErrorA(String msg, boolean flag) {
         setFlags(flag);
         binding.spGpo.setEnabled(!flag);
@@ -148,21 +157,26 @@ public class FragmentPaseListaManual extends Fragment {
             Snackbar.make(getView(), msg, Snackbar.LENGTH_LONG).show();
     }
 
+    // Lo mismo que enableErrorA pero sin elementos extras
     private void enableErrorB(String msg, boolean flag) {
         setFlags(flag);
         if (flag)
             Snackbar.make(getView(), msg, Snackbar.LENGTH_LONG).show();
     }
 
+    // Método común de los métodos enableErrorA y enableErrorB par evitar código demasiado verboso
+    // ya que en ambos métodos se llamaría a las siguientes líneas de código
     private void setFlags(boolean flag) {
         binding.btSend.setEnabled(!flag);
         binding.spAlumno.setEnabled(!flag);
         binding.spAsistencia.setEnabled(!flag);
     }
 
+    // Aquí se descargan los alumnos de un grupo en específico
     private void get(String grupo) {
         changeVisibility(false);
-        alumnoSpinnerData.clear();
+        alumnoSpinnerData.clear(); // Los alumnos se mostraran en un spinner por lo que se borran
+                                   // los valores anteriores
 
         FirebaseDatabase.getInstance()
         .getReference("alumno")
@@ -171,11 +185,14 @@ public class FragmentPaseListaManual extends Fragment {
         .addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // De haber alumnos se eliminaran los errores
                 if (dataSnapshot.exists()) {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren())
                         alumnoSpinnerData.add(snapshot.getValue(Alumno.class));
                     enableErrorB(null, false);
                 }
+                // pero si no los hay actualizan los errores ya que sin alumnos no se puede
+                // pasar lista
                 else
                     enableErrorB("Imposible registrar asistencia, grupo vacío", true);
 
@@ -197,9 +214,11 @@ public class FragmentPaseListaManual extends Fragment {
         binding.working.setVisibility(visible ? View.GONE : View.VISIBLE);
     }
 
+    // Aquí se registra una asistencia
     private void registro() {
         changeVisibility(false);
 
+        // Se obtienen los valores de los spinners correspondientes
         Asistencia a = new Asistencia();
         a.setAsistencia(binding.spAsistencia.getSelectedItemPosition());
         a.setGrupo(binding.spGpo.getSelectedItem().toString());
@@ -209,6 +228,7 @@ public class FragmentPaseListaManual extends Fragment {
         .getReference("asistencia")
         .child(UUID.randomUUID().toString())
         .setValue(a)
+        // Se insertan en la base de datos
         .addOnCompleteListener(task -> {
             if (task.isSuccessful())
                 Snackbar.make(getView(), "Asistencia registrada", Snackbar.LENGTH_LONG).show();

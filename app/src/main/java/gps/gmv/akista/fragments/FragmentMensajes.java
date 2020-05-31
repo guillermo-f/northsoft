@@ -56,7 +56,12 @@ public class FragmentMensajes extends Fragment {
     private FragmentMensajesAdapter adapter;
     private FragmentMensajesBinding binding;
 
-    private List<String> remitentes, ids, newMsgDataNom, newMsgDataId;
+    private List<String> remitentes,    // Se guardan los nombres de los chats ya existentes
+                         ids,           // Se guardan los ids de los chats ya existentes y se usan para
+                                        // abrir la conversación
+                         newMsgDataNom, // Se guardan los nombres para mostrar en un spinner de los usuarios
+                                        // existentes y disponibles para enviarles un mensaje
+                         newMsgDataId;  // Se guardan los id de los usuarios disponibles para enviar un mensaje
 
     @Nullable
     @Override
@@ -73,6 +78,7 @@ public class FragmentMensajes extends Fragment {
         setListeners();
     }
 
+    // Se inicializan valores
     private void init() {
         remitentes = new ArrayList<>();
         ids = new ArrayList<>();
@@ -86,8 +92,11 @@ public class FragmentMensajes extends Fragment {
     private void setListeners() {
         binding.btCrear.setOnClickListener(v -> mensaje());
         binding.btRegresar.setOnClickListener(v -> getFragmentManager().popBackStack());
+
+        // Hacer clic en un elemento de la lista de chats invocará a la pantalla de chat para el mismo
         binding.msgs.setOnItemClickListener((adapterView, view, i, l) -> setFragment(new FragmentMensaje(), ids.get(i), remitentes.get(i)));
 
+        // Se obtienen los nombres los chats accediendo directamente al nodo que posee ese atributo
         FirebaseDatabase.getInstance()
         .getReference("mensaje")
         .child(FirebaseAuth.getInstance().getUid())
@@ -96,7 +105,9 @@ public class FragmentMensajes extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshotA) {
                 for (DataSnapshot snapshot : dataSnapshotA.getChildren()) {
                     FirebaseDatabase.getInstance()
-                    .getReference("usuario")
+                    .getReference("usuario") // Al estar guardada la información en formato
+                                                   // JSON se pueden acceder así a los valores específicos
+                                                   // de los objetos almacenados
                     .child(snapshot.getKey())
                     .child("nombre")
                     .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -121,15 +132,20 @@ public class FragmentMensajes extends Fragment {
             }
         });
 
+        // Un usuario padre/tutor solo le puede enviar mensaje a un docente y viceversa.
+        // Por lo tanto en función del tipo de usuario que se es, se buscarán los usuarios a los
+        // que se pueden enviar mensajes
         FirebaseDatabase.getInstance()
         .getReference("usuario")
         .orderByChild("tipoUsuario")
+        // Si es usuario normal buscará docentes; si es docente buscará un usuario normal
         .equalTo(Singleton.getInstance().getUsuario().getTipoUsuario() == Usuario.TUTOR ? Usuario.PROFE : Usuario.TUTOR)
         .addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists())
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        // Se guardan tanto el id como el nombre
                         newMsgDataNom.add(snapshot.getValue(Usuario.class).getNombre());
                         newMsgDataId.add(snapshot.getValue(Usuario.class).getId());
                     }
@@ -144,6 +160,7 @@ public class FragmentMensajes extends Fragment {
     }
 
     private void mensaje() {
+        // Para crear un chat nuevo se elige desde una lista con los nombres ya almacenados
         String[] converted = newMsgDataNom.toArray(new String[0]);
 
         new AlertDialog.Builder(getActivity())
@@ -153,6 +170,8 @@ public class FragmentMensajes extends Fragment {
         .show();
     }
 
+    // Desde aquí se abre un fragment de chat que enviará tanto el id del usuario con el que se va a
+    // chatear como el nombre del mismo
     private void setFragment(FragmentMensaje fragment, String id, String nom) {
         Bundle bundle = new Bundle();
         bundle.putString("id", id);
